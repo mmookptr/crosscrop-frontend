@@ -15,9 +15,9 @@ const columns = [
   {field: "test1", headerName: "Test-1", editable: true},
   {field: "test2", headerName: "Test-2", editable: true},
   {field: "test3", headerName: "Test-3", editable: true},
-  {field: "abc_test", headerName: "ABC-Test", editable: true},
-  {field: "kfc_test", headerName: "KFC-Test", editable: true},
-  {field: "bgk_test", headerName: "BGK-Test", editable: true},
+  {field: "abc_test", headerName: "ABC-Test", editable: true, type: 'number'},
+  {field: "kfc_test", headerName: "KFC-Test", editable: true, type: 'number'},
+  {field: "bgk_test", headerName: "BGK-Test", editable: true, type: 'number'},
 ]
 
 const rows = mockData

@@ -1,6 +1,7 @@
 import { React } from "react";
 
 import List from "@mui/material/List";
+import { Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Box } from "@mui/system";
 
@@ -32,11 +33,22 @@ const Sidebar = () => {
 		<List
 			component="nav"
 			style={{ background: theme.palette.background.sidebar }}
-			sx={{width: "250px", boxShadow: 10}}
+			sx={{ width: "250px", boxShadow: 10 }}
 		>
 			<Box className="SidebarHeader">
-				<h1 className="title">Cross Crop</h1>
-				<p className="subTitle"> let's breed</p>
+				<Typography
+					style={{
+						background: theme.palette.background.sidebarTitle,
+						backgroundClip: "text",
+						WebkitBackgroundClip: "text",
+						color: "transparent",
+					}}
+					variant="sidebarTitle"
+				>
+					Cross Crop
+				</Typography>
+				{/* <h1 className="title">Cross Crop</h1> */}
+				<Typography align="center">Let's Breed</Typography>
 			</Box>
 
 			{presenters.map((presenter) => (

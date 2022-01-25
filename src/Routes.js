@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Sidebar from "./components/sidebar/Definition/Sidebar";
 import ColdRoomStoragePage from "./pages/ColdRoomStoragePage";
 import BreedingNurseryPage from "./pages/BreedingNurseryPage";
 import CrossingBlockPage from "./pages/CrossingBlockPage";
@@ -11,7 +10,7 @@ const Router = () => {
 	return (
 		<BrowserRouter>
 			<Routes>
-				<Route path="/" element={<Sidebar />} />
+				<Route path="/" element={<ColdRoomStoragePage />} />
 				<Route path="/cold-room-storage" element={<ColdRoomStoragePage />} />
 				<Route path="/breeding-nursery/:id" element={<BreedingNurseryPage />} />
 				<Route path="/crossing-block/:id" element={<CrossingBlockPage />} />
