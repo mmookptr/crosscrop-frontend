@@ -5,8 +5,6 @@ import { DataGrid } from '@mui/x-data-grid';
 
 import { mockData } from '../mockData';
 
-import '../css/Datasheet.css'
-
 const columns = [
   {field: "id", headerName: "ID"},
   {field: "name", headerName: "Name"},

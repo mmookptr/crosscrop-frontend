@@ -26,6 +26,15 @@ const theme = createTheme({
 	},
 	typography: {
 		fontFamily: ["Nunito Sans"],
+		pageTitle: {
+			fontSize: "36px",
+			fontWeight: "bold",
+		},
+		pageSubTitle: {
+			fontSize: "24px",
+			fontWeight: "bold",
+			color: "#f54d75"
+		}
 	},
 });
 
