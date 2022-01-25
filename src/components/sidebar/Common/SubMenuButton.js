@@ -7,7 +7,7 @@ const SubMenuButton = ({ presenter }) => {
 			sx={{
 				borderRadius: 24,
 				bgcolor: "background.subItemButton",
-				margin: "8px 24px 16px 24px",
+				margin: "0px 32px 16px 32px",
 			}}
 		/>
 	);

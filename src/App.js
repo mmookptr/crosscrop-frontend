@@ -11,7 +11,7 @@ const theme = createTheme({
 	palette: {
 		background: {
 			menuButton: "#ffffff",
-			subItemButton: "#fff3f0",
+			subItemButton: "#ffffff",
 			sidebar: "linear-gradient(90deg, #f4f2ea 0%, #f9eaed 100%)",
 			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%"
 		},
