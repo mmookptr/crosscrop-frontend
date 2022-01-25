@@ -5,15 +5,13 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Router from "./Routes";
 
-import "./App.css";
-
 const theme = createTheme({
 	palette: {
 		background: {
 			menuButton: "#ffffff",
 			subItemButton: "#ffffff",
 			sidebar: "linear-gradient(90deg, #f4f2ea 0%, #f9eaed 100%)",
-			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%"
+			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%",
 		},
 	},
 	components: {
@@ -34,24 +32,22 @@ const theme = createTheme({
 		pageSubTitle: {
 			fontSize: "24px",
 			fontWeight: "bold",
-			color: "#f54d75"
+			color: "#f54d75",
 		},
 		sidebarTitle: {
 			fontSize: "40px",
 			fontWeight: "bold",
 			WebkitBackgroundClip: "text",
-    	WebkitTextFillColor: "transparent"
+			WebkitTextFillColor: "transparent",
 		},
-		sidebarSubTitle: {
-			
-		}
+		sidebarSubTitle: {},
 	},
 });
 
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
-			<Box className="App">
+			<Box sx={{ height: "100%" }}>
 				<Router />
 			</Box>
 		</ThemeProvider>

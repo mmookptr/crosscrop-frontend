@@ -5,10 +5,8 @@ import { Typography } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Box } from "@mui/system";
 
-import "../../../css/Sidebar.css";
-
 import MenuButtonPresenter from "../../../presenters/MenuButtonPresenter";
-import MenuButton from "../Common/MenuButton";
+import MenuButton from "../common/MenuButton";
 
 const presenters = [
 	new MenuButtonPresenter("Cold Room Storage", "/cold-room-storage"),
@@ -33,9 +31,9 @@ const Sidebar = () => {
 		<List
 			component="nav"
 			style={{ background: theme.palette.background.sidebar }}
-			sx={{ width: "250px", boxShadow: 10 }}
+			sx={{ width: "250px", boxShadow: 10, padding: 0 }}
 		>
-			<Box className="SidebarHeader">
+			<Box sx={{ textAlign: "center", margin: "48px 0" }}>
 				<Typography
 					style={{
 						background: theme.palette.background.sidebarTitle,
@@ -47,8 +45,7 @@ const Sidebar = () => {
 				>
 					Cross Crop
 				</Typography>
-				{/* <h1 className="title">Cross Crop</h1> */}
-				<Typography align="center">Let's Breed</Typography>
+				<Typography>Let's Breed</Typography>
 			</Box>
 
 			{presenters.map((presenter) => (

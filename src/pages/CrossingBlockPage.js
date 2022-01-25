@@ -1,6 +1,6 @@
 import { React } from "react";
 import { useParams } from "react-router-dom";
-import PageLayout from "../components/Layout";
+import PageLayout from "../components/Page";
 
 const CrossingBlockPage = () => {
 	const { id } = useParams();

@@ -1,14 +1,15 @@
 import { React } from "react";
 import { useParams } from "react-router-dom";
-import PageLayout from "../components/Layout";
+
+import Page from "../components/Page";
 
 const BreedingNurseryPage = () => {
 	const { id } = useParams();
 
 	return (
-		<PageLayout>
+		<Page>
 			<h1>{id}</h1>
-		</PageLayout>
+		</Page>
 	);
 };
 

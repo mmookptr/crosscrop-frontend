@@ -1,10 +1,10 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import ColdRoomStoragePage from "./pages/ColdRoomStoragePage";
-import BreedingNurseryPage from "./pages/BreedingNurseryPage";
-import CrossingBlockPage from "./pages/CrossingBlockPage";
-import YieldTrialPage from "./pages/YieldTrialPage";
+import ColdRoomStoragePage from "../pages/ColdRoomStoragePage";
+import BreedingNurseryPage from "../pages/BreedingNurseryPage";
+import CrossingBlockPage from "../pages/CrossingBlockPage";
+import YieldTrialPage from "../pages/YieldTrialPage";
 
 const Router = () => {
 	return (

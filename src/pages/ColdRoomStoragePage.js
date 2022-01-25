@@ -1,15 +1,20 @@
 import React from "react";
 
 import { Typography } from "@mui/material";
+import { Box } from "@mui/system";
 
-import PageLayout from "../components/Layout";
-import Datasheet from "../components/DatasheetLayout";
+import PageLayout from "../components/Page";
+import Datasheet from "../components/Datasheet";
 
 const ColdRoomStoragePage = () => {
 	return (
 		<PageLayout>
-			<Typography display="block" variant="pageTitle" sx={{ marginLeft: "72px" , width: "100%"}}>Cold Room Storage</Typography>
-			<Typography variant="pageSubTitle" sx={{ marginLeft: "72px" }}>All Germplasm</Typography>
+			<Box sx={{ paddingLeft: "16px" }}>
+				<Typography display="block" variant="pageTitle">
+					Cold Room Storage
+				</Typography>
+				<Typography variant="pageSubTitle">All Germplasm</Typography>
+			</Box>
 			<Datasheet />
 		</PageLayout>
 	);
