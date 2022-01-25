@@ -1,0 +1,7 @@
+.Datasheet {
+  display: flex;
+  height: 700px;
+  /* width: 50%; */
+  align-items: center;
+  padding: 64px;
+}
