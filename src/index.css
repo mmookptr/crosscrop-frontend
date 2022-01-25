@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;400&display=swap');
 
 * {
 	box-sizing: border-box;
@@ -9,6 +9,7 @@ body {
   font-family: 'Nunito Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: linear-gradient(180deg, rgba(245,242,230,1) 0%, rgba(244,202,195,1) 50%, rgba(240,185,199,1) 100%);
 }
 
 code {

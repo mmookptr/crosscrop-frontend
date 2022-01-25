@@ -1,6 +1,6 @@
 .Datasheet {
   display: flex;
-  height: 700px;
+  height: 100%;
   /* width: 50%; */
   align-items: center;
   padding: 64px;
