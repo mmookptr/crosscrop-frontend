@@ -1,9 +1,11 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 
 import { Box } from "@mui/system";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-import Router from "./Routes";
+import AppRoutes from "./AppRoutes";
+import Sidebar from "../components/sidebar/definition/Sidebar";
 
 const theme = createTheme({
 	palette: {
@@ -47,9 +49,12 @@ const theme = createTheme({
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
-			<Box sx={{ height: "100%" }}>
-				<Router />
-			</Box>
+			<BrowserRouter>
+				<Box sx={{ display: "flex", height: "100%" }}>
+					<Sidebar />
+					<AppRoutes />
+				</Box>
+			</BrowserRouter>
 		</ThemeProvider>
 	);
 }

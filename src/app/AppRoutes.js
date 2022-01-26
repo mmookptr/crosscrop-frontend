@@ -1,14 +1,16 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+
+import { Box } from "@mui/system";
 
 import ColdRoomStoragePage from "../pages/ColdRoomStoragePage";
 import BreedingNurseryPage from "../pages/BreedingNurseryPage";
 import CrossingBlockPage from "../pages/CrossingBlockPage";
 import YieldTrialPage from "../pages/YieldTrialPage";
 
-const Router = () => {
+const AppRoutes = () => {
 	return (
-		<BrowserRouter>
+		<Box sx={{ margin: 0, flex: "auto", padding: "64px" }}>
 			<Routes>
 				<Route path="/" element={<ColdRoomStoragePage />} />
 				<Route path="/cold-room-storage" element={<ColdRoomStoragePage />} />
@@ -16,8 +18,8 @@ const Router = () => {
 				<Route path="/crossing-block/:id" element={<CrossingBlockPage />} />
 				<Route path="/yield-trial/:id" element={<YieldTrialPage />} />
 			</Routes>
-		</BrowserRouter>
+		</Box>
 	);
 };
 
-export default Router;
+export default AppRoutes;

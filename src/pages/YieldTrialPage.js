@@ -1,15 +1,10 @@
-import { React } from 'react';
-import { useParams } from 'react-router-dom';
-import PageLayout from '../components/Page';
+import { React } from "react";
+import { useParams } from "react-router-dom";
 
 const YieldTrialPage = () => {
-  const { id } = useParams()
+	const { id } = useParams();
 
-  return (
-    <PageLayout>
-      <h1>{id}</h1>
-    </PageLayout>
-  )
-}
+	return <h1>{id}</h1>;
+};
 
-export default YieldTrialPage
+export default YieldTrialPage;

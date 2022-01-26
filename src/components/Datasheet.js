@@ -3,7 +3,7 @@ import React from "react";
 import { Box } from "@mui/system";
 import { DataGrid } from "@mui/x-data-grid";
 
-import { mockData } from "../mockData";
+import { mockData } from "../data/mockData";
 
 const columns = [
 	{ field: "id", headerName: "ID" },
