@@ -1,5 +1,5 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { Box } from "@mui/system";
 import Collapse from "@mui/material/Collapse";
@@ -11,7 +11,12 @@ import SubMenuButton from "./SubMenuButton";
 
 const MenuButton = ({ presenter, sx }) => {
 	const [open, setOpen] = useState(false);
+
+	const location = useLocation().pathname;
+
 	const hasSubMenu = presenter.subMenuButtonPresenters.length !== 0;
+
+	const isCurrentLocation = location === presenter.toPath
 
 	const handleClick = () => {
 		setOpen(!open);
@@ -23,7 +28,7 @@ const MenuButton = ({ presenter, sx }) => {
 			: {
 					sx: {
 						borderRadius: 24,
-						bgcolor: "background.menuButton",
+						bgcolor: isCurrentLocation ? "background.activeMenuButton": "background.menuButton",
 						margin: "16px",
 					},
 			  }),
@@ -34,7 +39,7 @@ const MenuButton = ({ presenter, sx }) => {
 	return (
 		<Box>
 			<ListItemButton {...fieldProp}>
-				<ListItemText primary={presenter.buttonText} />
+				<ListItemText primary={presenter.buttonText}/>
 
 				{hasSubMenu && (open ? <ExpandLess /> : <ExpandMore />)}
 			</ListItemButton>

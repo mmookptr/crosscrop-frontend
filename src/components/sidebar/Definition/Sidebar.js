@@ -1,4 +1,5 @@
 import { React } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import List from "@mui/material/List";
 import { Typography } from "@mui/material";
@@ -27,6 +28,8 @@ const presenters = [
 const Sidebar = () => {
 	const theme = useTheme();
 
+	const location = useLocation().pathname;
+
 	return (
 		<List
 			component="nav"
@@ -42,6 +45,8 @@ const Sidebar = () => {
 						color: "transparent",
 					}}
 					variant="sidebarTitle"
+					component= {Link}
+					to= {"/"}
 				>
 					Cross Crop
 				</Typography>
@@ -49,7 +54,7 @@ const Sidebar = () => {
 			</Box>
 
 			{presenters.map((presenter) => (
-				<MenuButton presenter={presenter} key={presenter.buttonText} />
+				<MenuButton presenter={presenter} key={presenter.buttonText} currentLocation={{location}}/>
 			))}
 		</List>
 	);
