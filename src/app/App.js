@@ -6,14 +6,14 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import AppRoutes from "./AppRoutes";
 import Sidebar from "../components/sidebar/definition/Sidebar";
- 
+
 const theme = createTheme({
 	palette: {
 		background: {
 			menuButton: "#ffffff",
 			activeMenuButton: "#f4cac3",
 			sidebar: "linear-gradient(90deg, #f4f2ea 0%, #f9eaed 100%)",
-			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%",
+			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%)",
 		},
 	},
 	components: {

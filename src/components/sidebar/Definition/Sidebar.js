@@ -45,8 +45,8 @@ const Sidebar = () => {
 						color: "transparent",
 					}}
 					variant="sidebarTitle"
-					component= {Link}
-					to= {"/"}
+					component={Link}
+					to={"/"}
 				>
 					Cross Crop
 				</Typography>
@@ -54,7 +54,11 @@ const Sidebar = () => {
 			</Box>
 
 			{presenters.map((presenter) => (
-				<MenuButton presenter={presenter} key={presenter.buttonText} currentLocation={{location}}/>
+				<MenuButton
+					presenter={presenter}
+					key={presenter.buttonText}
+					currentLocation={{ location }}
+				/>
 			))}
 		</List>
 	);
