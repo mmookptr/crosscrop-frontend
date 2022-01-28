@@ -1,21 +1,12 @@
-import React from "react";
+import { React } from "react";
 
-import { Typography } from "@mui/material";
-import { Box } from "@mui/system";
-
-import Datasheet from "../components/Datasheet";
+import PagePresenter from "../presenters/PagePresenter";
+import Page from "../components/Page";
 
 const ColdRoomStoragePage = () => {
+	const presenter = new PagePresenter("Cold Room Storage", "All germplasm")
 	return (
-		<Box sx={{ height: "800px" }}>
-			<Box sx={{ paddingLeft: "16px" }}>
-				<Typography display="block" variant="pageTitle">
-					Cold Room Storage
-				</Typography>
-				<Typography variant="pageSubTitle">All Germplasm</Typography>
-			</Box>
-			<Datasheet />
-		</Box>
+		<Page presenter = {presenter} />
 	);
 };
 

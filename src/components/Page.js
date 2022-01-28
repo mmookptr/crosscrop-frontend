@@ -1,14 +1,22 @@
 import React from "react";
 
 import { Box } from "@mui/system";
+import { Typography } from "@mui/material";
 
-import Sidebar from "./sidebar/definition/Sidebar";
+import Datasheet from "./Datasheet";
 
-const Page = ({ children }) => {
+const Page = ({presenter}) => {
 	return (
-		<Box sx={{ display: "flex", height: "100%" }}>
-			<Sidebar />
-			<Box sx={{ margin: 0, flex: "auto", padding: "64px" }}>{children}</Box>
+		<Box sx={{ height: "800px" }}>
+			<Box sx={{ paddingLeft: "16px" }}>
+				<Typography display="block" variant="pageTitle">
+					{presenter.pageTitle}
+				</Typography>
+				<Typography variant="pageSubTitle">
+					{presenter.pageSubTitle}
+				</Typography>
+			</Box>
+			<Datasheet />
 		</Box>
 	);
 };
