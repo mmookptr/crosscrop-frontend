@@ -16,7 +16,7 @@ const Page = ({presenter}) => {
 					{presenter.pageSubTitle}
 				</Typography>
 			</Box>
-			<Datasheet />
+			<Datasheet rows={presenter.rows} columns={presenter.columns} />
 		</Box>
 	);
 };

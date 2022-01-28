@@ -1,8 +1,9 @@
 class PagePresenter {
-  constructor(pageTitle, pageSubTitle, displayData=[]){
-    this.pageTitle = pageTitle
-    this.pageSubTitle = pageSubTitle
-    this.disaplayData = displayData
+  constructor(pageTitle, pageSubTitle, rows=[], columns=[]){
+    this.pageTitle = pageTitle;
+    this.pageSubTitle = pageSubTitle;
+    this.rows = rows;
+    this.columns = columns;
   }
 }
 

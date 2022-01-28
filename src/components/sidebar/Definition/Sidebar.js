@@ -21,7 +21,7 @@ const presenters = [
 	]),
 	new MenuButtonPresenter("Yield Trial", "", [
 		new MenuButtonPresenter("YT1123T", "/yield-trial/YT1123T"),
-		new MenuButtonPresenter("YT1125P", "/yield-tria/YT1125P"),
+		new MenuButtonPresenter("YT1125P", "/yield-trial/YT1125P"),
 	]),
 ];
 
