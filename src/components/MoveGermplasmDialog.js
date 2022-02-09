@@ -9,9 +9,13 @@ import {
   Select, 
   MenuItem, 
   Typography, 
-  DialogActions } from '@mui/material'
+  DialogActions 
+} from '@mui/material'
+
+import DialogStepper from './DialogStepper';
 
 const MoveGermplasmDialog = ({open, onClose}) => {
+  const diaLogSteps = ["Select destination", "Name new file", "Summary"]
   const [selected, setSelected] = useState('');
 
   const handleChange = (event) => {
@@ -21,10 +25,12 @@ const MoveGermplasmDialog = ({open, onClose}) => {
   return (
     <Dialog
       open={open}
-      onClose={onClose}> 
+      onClose={onClose}
+      > 
       <DialogTitle>{"Move Germplasm"}</DialogTitle>
       <DialogContent>
-        <Typography>
+        <DialogStepper/>
+        {/* <Typography>
           moving selected rows to: 
 
         </Typography>
@@ -43,13 +49,13 @@ const MoveGermplasmDialog = ({open, onClose}) => {
             <MenuItem value={"crossing-block"}>Crossing Block</MenuItem>
             <MenuItem value={"yield-trial"}>Yield Trial</MenuItem>
           </Select>
-        </FormControl>
+        </FormControl> */}
       </DialogContent>
-      <DialogActions>
+      {/* <DialogActions>
         <Button autoFocus onClick={onClose}>
           Continue
         </Button>
-      </DialogActions>
+      </DialogActions> */}
     </Dialog>
   )
 }
