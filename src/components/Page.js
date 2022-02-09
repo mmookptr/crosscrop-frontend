@@ -4,6 +4,7 @@ import { Box } from "@mui/system";
 import { Typography, Button } from "@mui/material";
 
 import Datasheet from "./Datasheet";
+import MoveGermplasmButton from "./MoveGermplasmButton";
 
 const Page = ({presenter}) => {
 	return (
@@ -14,14 +15,7 @@ const Page = ({presenter}) => {
 				</Typography>
 				<Typography variant="pageSubTitle">{presenter.pageSubTitle}</Typography>
 			</Box>
-			<Box sx={{ padding: "16px", display: "flex", justifyContent: "end"  }}>
-				<Button 
-					sx={{color: "#eabbc5", bgcolor: "#fffaf9", fontWeight: "bold", boxShadow: 10, borderRadius: "8px", "&:hover": {
-						bgcolor: "##f0b9c7", color: "white"
-					}}}
-				>To Breeding
-				</Button>
-			</Box>
+			<MoveGermplasmButton/>
 			<Datasheet rows={presenter.rows} columns={presenter.columns} />
 		</Box>
 	);
