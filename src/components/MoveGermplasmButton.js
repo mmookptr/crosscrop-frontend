@@ -1,4 +1,5 @@
 import { React, useState } from 'react';
+import { useSelector } from 'react-redux';
 
 import { Box } from '@mui/system'
 import { Button } from '@mui/material'
@@ -6,10 +7,13 @@ import { Button } from '@mui/material'
 import MoveGermplasmDialog from './MoveGermplasmDialog';
 
 const MoveGermplasmButton =  () => { 
+
+  const selectedGermplasm = useSelector(state => state.germplasm.ids)
   
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
+    console.log(selectedGermplasm)
     setOpen(true);
   }
 

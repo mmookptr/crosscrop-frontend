@@ -1,4 +1,5 @@
 import React from "react";
+import {useDispatch} from "react-redux";
 
 import { Box } from "@mui/system";
 import {
@@ -6,11 +7,10 @@ import {
 	GridToolbarColumnsButton,
 	GridToolbarContainer,
 } from "@mui/x-data-grid";
+import { getSelectedGermplasm } from "../slices/germplasmSlice.js"
 
-const getSelectedRowId = (ids) => {
-	console.log(ids);
-};
 const Datasheet = ({ rows, columns }) => {
+	const dispatch = useDispatch()
 	const toolbar = () => {
 		return (
 			<GridToolbarContainer sx={{ margin: "8px" }}>
@@ -29,7 +29,7 @@ const Datasheet = ({ rows, columns }) => {
 				checkboxSelection
 				disableSelectionOnClick
 				onSelectionModelChange={(item) => {
-					getSelectedRowId(item);
+					dispatch(getSelectedGermplasm(item))
 				}}
 				sx={{ borderRadius: "24px", bgcolor: "#ffffff", boxShadow: 10 }}
 				components={{
