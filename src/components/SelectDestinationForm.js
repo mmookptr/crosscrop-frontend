@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { Box, FormControl, Select, MenuItem } from '@mui/material';
 
-import { getSelectedDestination } from "../slices/germplasmSlice.js"
+import { getSelectedWorkflow } from "../slices/germplasmSlice.js"
 
 const SelectDestinationForm = () => {
   const dispatch = useDispatch()
@@ -12,7 +12,7 @@ const SelectDestinationForm = () => {
   const [selected, setSelected] = useState('');
   const handleChange = (event) => {
     setSelected(event.target.value)
-    dispatch(getSelectedDestination(event.target.value))
+    dispatch(getSelectedWorkflow(event.target.value))
   };
 
   return (

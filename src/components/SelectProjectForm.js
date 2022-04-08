@@ -1,4 +1,5 @@
 import {React, useState} from 'react';
+import { useDispatch } from 'react-redux';
 
 import { 
   Box, 
@@ -12,21 +13,23 @@ import {
   RadioGroup,
   Radio } from '@mui/material';
 
+import { getProjectId, getMoveGermplasmAction } from '../slices/germplasmSlice';
+
 const SelectProjectForm  = () => {
+  const dispatch = useDispatch()
   const [buttonSelected, setButtonSelected] = useState('add-to-project');
   const handleButtonSelectChange = (event) => {
     setButtonSelected(event.target.value)
+    setProjectId('')
+    dispatch(getMoveGermplasmAction(event.target.value))
   }
 
-  const [selected, setSelected] = useState('');
+  const [projectId, setProjectId] = useState('');
   const handleChange = (event) => {
-    setSelected(event.target.value)
+    setProjectId(event.target.value)
+    dispatch(getProjectId(event.target.value))
   }
 
-  const [text, setText] = useState('')
-  const handleTextChange = (event) => {
-    setText(event.target.value)
-  }
   return (
     <Box sx={{margin: "36px"}}>
       <Typography variant="stepperTitle" display="block">Select Project</Typography>
@@ -39,7 +42,7 @@ const SelectProjectForm  = () => {
           <InputLabel id="choose-exisiting-project">Choose Project</InputLabel>
           <Select
             labelId="choose-exisiting-project"
-            value={selected}
+            value={projectId}
             onChange={handleChange}
           >
             <MenuItem value={"project1"}>project1</MenuItem>
@@ -51,7 +54,7 @@ const SelectProjectForm  = () => {
         ) : ''}
         <FormControlLabel value="create-new-project" control={<Radio />} label="Create new peoject" />
         {buttonSelected === "create-new-project" ? (
-          <TextField id="standard-basic" label="Enter Project Name" variant="standard" onChange={handleTextChange} value={text}/>
+          <TextField id="standard-basic" label="Enter Project Name" variant="standard" onChange={handleChange} value={projectId}/>
         ): ''}
       </RadioGroup>
     </Box>
