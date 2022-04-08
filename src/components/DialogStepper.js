@@ -10,13 +10,14 @@ import {
 } from '@mui/material';
 
 import SelectDestinationForm from "./SelectDestinationForm";
+import SelectProjectForm from './SelectProjectForm';
 
-const steps = ['Select destination', 'Name new file', 'Summary'];
+const steps = ['Select workflow', 'Select project', 'Summary'];
 
 const DialogStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const formSteps = [<SelectDestinationForm/>, 'step2 name', 'step3 summary']
+  const formSteps = [<SelectDestinationForm/>, <SelectProjectForm/>, 'step3 summary']
 
   const handleNext = () => {
 

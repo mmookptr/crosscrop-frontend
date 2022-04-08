@@ -42,7 +42,10 @@ const theme = createTheme({
 			WebkitBackgroundClip: "text",
 			WebkitTextFillColor: "transparent",
 		},
-		sidebarSubTitle: {},
+		stepperTitle: {
+			fontSize: "20px",
+			fontWeight:  "bold"
+		},
 	},
 });
 
