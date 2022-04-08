@@ -1,5 +1,5 @@
 class PagePresenter {
-  constructor(pageTitle, pageSubTitle, rows=[], columns=[]){
+  constructor(pageTitle, pageSubTitle, rows = [], columns = []) {
     this.pageTitle = pageTitle;
     this.pageSubTitle = pageSubTitle;
     this.rows = rows;
@@ -7,4 +7,4 @@ class PagePresenter {
   }
 }
 
-export default PagePresenter
+export default PagePresenter;
