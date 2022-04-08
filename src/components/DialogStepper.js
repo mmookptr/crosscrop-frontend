@@ -11,13 +11,14 @@ import {
 
 import SelectDestinationForm from "./SelectDestinationForm";
 import SelectProjectForm from './SelectProjectForm';
+import SummaryForm from './SummaryForm';
 
 const steps = ['Select workflow', 'Select project', 'Summary'];
 
 const DialogStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const formSteps = [<SelectDestinationForm/>, <SelectProjectForm/>, 'step3 summary']
+  const formSteps = [<SelectDestinationForm/>, <SelectProjectForm/>]
 
   const handleNext = () => {
 
@@ -28,8 +29,8 @@ const DialogStepper = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handleConfirm = () => {
+    console.log("All steps done")
   };
 
   return (
@@ -45,15 +46,21 @@ const DialogStepper = () => {
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
+      {activeStep === steps.length - 1 ? (
         <Box>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
+          <SummaryForm/>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button>
             <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
+              <Button onClick={handleConfirm}>Confirm</Button>
+            </Box>
         </Box>
       ) : (
         <Box>
@@ -72,7 +79,7 @@ const DialogStepper = () => {
   
 
             <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+              {activeStep === steps.length - 1  ? 'Continue' : 'Next'}
             </Button>
           </Box>
         </Box>
