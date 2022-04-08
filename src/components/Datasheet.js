@@ -1,12 +1,13 @@
 import React from "react";
-import {useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Box } from "@mui/system";
 import {
-	DataGrid,
+	DataGridPro,
 	GridToolbarColumnsButton,
 	GridToolbarContainer,
-} from "@mui/x-data-grid";
+	GridToolbar
+} from '@mui/x-data-grid-pro';
 import { getSelectedGermplasm } from "../slices/germplasmSlice.js"
 
 const Datasheet = ({ rows, columns }) => {
@@ -15,7 +16,10 @@ const Datasheet = ({ rows, columns }) => {
 		return (
 			<GridToolbarContainer sx={{ margin: "8px" }}>
 				<GridToolbarColumnsButton
-					sx={{ color: "#f199af", fontWeight: "bold" }}
+					sx={{
+						color: "#f199af",
+						fontWeight: "bold"
+					}}
 				/>
 			</GridToolbarContainer>
 		);
@@ -23,7 +27,7 @@ const Datasheet = ({ rows, columns }) => {
 
 	return (
 		<Box sx={{ flex: 1 }}>
-			<DataGrid
+			<DataGridPro
 				rows={rows}
 				columns={columns}
 				checkboxSelection
@@ -31,9 +35,14 @@ const Datasheet = ({ rows, columns }) => {
 				onSelectionModelChange={(item) => {
 					dispatch(getSelectedGermplasm(item))
 				}}
-				sx={{ borderRadius: "24px", bgcolor: "#ffffff", boxShadow: 10 }}
+				sx={{
+					borderRadius: "24px",
+					bgcolor: "#ffffff",
+					boxShadow: 10,
+					padding: "8px"
+				}}
 				components={{
-					Toolbar: toolbar,
+					Toolbar: GridToolbar,
 				}}
 			/>
 		</Box>
