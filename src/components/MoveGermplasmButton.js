@@ -13,7 +13,6 @@ const MoveGermplasmButton =  () => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    console.log(selectedGermplasm)
     setOpen(true);
   }
 

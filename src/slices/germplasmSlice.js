@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { ids: []}
+const initialState = { ids: [], destination: 'to where'}
 const germplasmSlice = createSlice({
   name: 'germplasm', 
   initialState,
@@ -8,10 +8,14 @@ const germplasmSlice = createSlice({
     getSelectedGermplasm: (state, action) => {
       const selectedGermplasm = action.payload
       state.ids = selectedGermplasm
+    },
+    getSelectedDestination: (state, action) => {
+      const selectedDestination = action.payload
+      state.destination = selectedDestination
     }
   }
 })
 
-export const {getSelectedGermplasm} = germplasmSlice.actions
+export const {getSelectedGermplasm, getSelectedDestination} = germplasmSlice.actions
 
 export default germplasmSlice.reducer

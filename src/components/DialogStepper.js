@@ -6,20 +6,17 @@ import {
   Step,
   StepLabel,
   Button,
-  Typography,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  FormControl,
-  Select,
-  MenuItem
+  Typography
 } from '@mui/material';
+
+import SelectDestinationForm from "./SelectDestinationForm";
 
 const steps = ['Select destination', 'Name new file', 'Summary'];
 
 const DialogStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
+
+  const formSteps = [<SelectDestinationForm/>, 'step2 name', 'step3 summary']
 
   const handleNext = () => {
 
@@ -59,7 +56,9 @@ const DialogStepper = () => {
         </Box>
       ) : (
         <Box>
-          <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography>
+          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
+          {formSteps[activeStep]}
+          
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
