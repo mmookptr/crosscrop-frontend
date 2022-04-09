@@ -8,12 +8,12 @@ import { GermplasmListPage } from "./germplasmListPage/GermplasmListPage";
 import { GermplasmListPageState as State } from "./germplasmListPage/GermplasmListPageState";
 import { GermplasmListPageEvent as Event } from "./germplasmListPage/GermplasmListPageEvent";
 
-import { BreedingNurseryRepository } from "../repositories/BreedingNurseryRepository";
+import { ColdroomRepository } from "../repositories/ColdroomRepository";
 
-const BreedingNurseryPage = () => {
+const ColdroomPage = () => {
   const { id } = useParams();
   const [pageState, setPageState] = useState(new State.StartState());
-  const repository = new BreedingNurseryRepository(AppConfig.BaseURL);
+  const repository = new ColdroomRepository(AppConfig.BaseURL);
 
   const addEvent = async (event) => {
     handleEvent(event);
@@ -35,10 +35,10 @@ const BreedingNurseryPage = () => {
 
   const loadData = async () => {
     try {
-      const coldroom = await repository.getBreedingNurseryById(id);
+      const coldroom = await repository.getColdroom();
 
       const presenter = new GermplasmListPagePresenter(
-        "BreedingNursery Storage",
+        "Coldroom Storage",
         id,
         coldroom.germplasms
       );
@@ -52,4 +52,4 @@ const BreedingNurseryPage = () => {
   return <GermplasmListPage state={pageState} addEvent={addEvent} />;
 };
 
-export { BreedingNurseryPage };
+export { ColdroomPage };
