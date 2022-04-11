@@ -3,7 +3,7 @@ import { React, useEffect } from "react";
 import { Box } from "@mui/system";
 import { Typography, CircularProgress } from "@mui/material";
 
-import Datasheet from "../../components/Datasheet";
+import Datasheet from "../../components/datasheet/Datasheet";
 import MoveGermplasmButton from "../../components/MoveGermplasmButton";
 import { GermplasmListPageState as State } from "./GermplasmListPageState";
 import { GermplasmListPageEvent as Event } from "./GermplasmListPageEvent";
@@ -21,10 +21,10 @@ const GermplasmListPage = ({ state, addEvent }) => {
     return <LoadingPage />;
   } else if (state instanceof State.LoadSuccessState) {
     return <LoadedPage presenter={state.presenter} />;
-  } else if (state instanceof State.LoadFailedState) {
-    return <LoadFailedPage errorMessage={state.error} />;
+  } else if (state instanceof State.LoadFailState) {
+    return <LoadFailPage errorMessage={state.error} />;
   }
-  return <LoadFailedPage errorMessage={"Invalid Page State"} />;
+  return <LoadFailPage errorMessage={"Invalid Page State"} />;
 };
 
 const LoadingPage = () => {
@@ -52,12 +52,12 @@ const LoadedPage = ({ presenter }) => {
         <Typography variant="pageSubTitle">{presenter.pageSubTitle}</Typography>
       </Box>
       <MoveGermplasmButton />
-      <Datasheet rows={presenter.rows} columns={presenter.columns} />
+      <Datasheet presenter={presenter} />
     </Box>
   );
 };
 
-const LoadFailedPage = ({ errorMessage }) => {
+const LoadFailPage = ({ errorMessage }) => {
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Box sx={{ paddingLeft: "16px" }}>

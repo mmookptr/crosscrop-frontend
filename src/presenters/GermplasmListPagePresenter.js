@@ -14,21 +14,31 @@ class GermplasmListPagePresenter {
   createRowsAndColumnsFromGermplasms(germplasms) {
     return germplasms.reduce(
       (prev, germplasm) => {
+        const attributes = germplasm.attributes.reduce((prev, attribute) => {
+          const result = { ...prev };
+          result[attribute.name] = attribute.value;
+          return result;
+        }, {});
         const row = {
           id: germplasm.id,
           name: germplasm.name,
-          createdOn: germplasm.created,
-          updatedOn: germplasm.name,
-          ...germplasm.attributes,
+          createdOn: germplasm.createdOn,
+          updatedOn: germplasm.updatedOn,
+          ...attributes,
         };
+
         const newRows = [...prev.rows, row];
 
         const columns = [
           { field: "id", headerName: "ID", editable: false },
-          { field: "name", headerName: "Name", editable: false },
+          { field: "name", headerName: "Name", editable: true },
         ].concat(
-          Object.keys(germplasm.attributes).map((key) => {
-            return { field: key, editable: true };
+          germplasm.attributes.map((attribute) => {
+            return {
+              field: attribute.name,
+              type: attribute.type,
+              editable: true,
+            };
           })
         );
         const newColumns = _.uniqWith([...prev.columns, ...columns], _.isEqual);

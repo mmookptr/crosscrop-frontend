@@ -27,7 +27,7 @@ const YieldTrialPage = () => {
     } else if (event instanceof Event.LoadSuccessEvent) {
       setPageState(new State.LoadSuccessState(event.presenter));
     } else if (event instanceof Event.LoadFailEvent) {
-      setPageState(new State.LoadFailedState(event.error));
+      setPageState(new State.LoadFailState(event.error));
     } else {
       console.log(`Invalid Event ${event}`);
     }

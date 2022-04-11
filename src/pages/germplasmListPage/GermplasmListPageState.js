@@ -3,7 +3,7 @@ class GermplasmListPageState {
     this.StartState = StartState;
     this.LoadingState = LoadingState;
     this.LoadSuccessState = LoadSuccessState;
-    this.LoadFailedState = LoadFailedState;
+    this.LoadFailState = LoadFailState;
   }
 }
 
@@ -14,7 +14,7 @@ class LoadSuccessState {
     this.presenter = presenter;
   }
 }
-class LoadFailedState {
+class LoadFailState {
   constructor(error) {
     this.error = error;
   }

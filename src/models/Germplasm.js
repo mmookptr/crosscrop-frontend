@@ -18,11 +18,30 @@ class Germplasm {
     return new Germplasm(
       json["id"],
       json["name"],
-      json["attributes"],
+      json["attributes"].map(GermplasmAttribute.fromJSON),
       json["created_on"],
       json["updated_on"]
     );
   }
 }
 
-export { Germplasm };
+class GermplasmAttribute {
+  constructor(name, type, value) {
+    if (name === undefined)
+      throw new Error("GermplasmAttribute name: undefined");
+    if (type === undefined)
+      throw new Error("GermplasmAttribute type: undefined");
+    if (value === undefined)
+      throw new Error("GermplasmAttribute value: undefined");
+
+    this.name = name;
+    this.type = type;
+    this.value = value;
+  }
+
+  static fromJSON(json) {
+    return new GermplasmAttribute(json.name, json.type, json.value);
+  }
+}
+
+export { Germplasm, GermplasmAttribute };

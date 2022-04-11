@@ -88,8 +88,20 @@ const MenuList = () => {
 
 const Season = () => {
   return (
-    <Box sx={{ display: "flex", justifyContent: "center", padding: "24px" }}>
-      <Button sx={{ color: "black", border: "1px solid gray", width: "240px" }}>
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        padding: "24px",
+      }}
+    >
+      <Button
+        sx={{
+          color: "black",
+          width: "240px",
+          background: "white",
+        }}
+      >
         Year 2021 Season1
       </Button>
     </Box>
