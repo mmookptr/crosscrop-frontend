@@ -5,7 +5,7 @@ import { Box, FormControl, Select, MenuItem } from '@mui/material';
 
 import { getSelectedWorkflow } from "../slices/germplasmSlice.js"
 
-const SelectDestinationForm = () => {
+const SelectWorkflowForm = () => {
   const dispatch = useDispatch()
   const selectGermplasm  = useSelector(state => state.germplasm.ids)
   const selectedGermplasmCount  = selectGermplasm.length  
@@ -36,4 +36,4 @@ const SelectDestinationForm = () => {
   )
 }
 
-export default SelectDestinationForm
+export default SelectWorkflowForm

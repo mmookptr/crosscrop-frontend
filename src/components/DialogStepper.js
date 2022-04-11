@@ -9,7 +9,7 @@ import {
   Typography
 } from '@mui/material';
 
-import SelectDestinationForm from "./SelectDestinationForm";
+import SelectWorkflowForm from "./SelectWorkflowForm";
 import SelectProjectForm from './SelectProjectForm';
 import SummaryForm from './SummaryForm';
 
@@ -18,7 +18,7 @@ const steps = ['Select workflow', 'Select project', 'Summary'];
 const DialogStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const formSteps = [<SelectDestinationForm/>, <SelectProjectForm/>]
+  const formSteps = [<SelectWorkflowForm/>, <SelectProjectForm/>]
 
   const handleNext = () => {
 
