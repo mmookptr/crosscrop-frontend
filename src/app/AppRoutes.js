@@ -10,7 +10,7 @@ import { YieldTrialPage } from "../pages/YieldTrialPage";
 
 const AppRoutes = () => {
   return (
-    <Box sx={{ margin: 0, flex: "auto", padding: "64px" }}>
+    <Box sx={{ margin: 0, flex: "auto", padding: "32px" }}>
       <Routes>
         <Route path="/" element={<ColdroomPage />} />
         <Route path="/cold-room-storage" element={<ColdroomPage />} />

@@ -16,7 +16,7 @@ import { RowState } from "./RowState";
 
 import { GridActionsCellItem } from "@mui/x-data-grid";
 
-const rowAction = (apiRef) => {
+const actionColumn = (apiRef, addEvent) => {
   return {
     field: "actions",
     type: "actions",
@@ -38,7 +38,7 @@ const rowAction = (apiRef) => {
             <GridActionsCellItem
               icon={<SaveIcon />}
               label="Save"
-              onClick={handleSaveClick(id, apiRef)}
+              onClick={handleSaveClick(id, apiRef, addEvent)}
               color="primary"
             />,
             <GridActionsCellItem
@@ -76,7 +76,7 @@ const handleEditClick = (id, apiRef) => (event) => {
   startRowEditing(id, apiRef);
 };
 
-const handleSaveClick = (id, apiRef) => async (event) => {
+const handleSaveClick = (id, apiRef, addEvent) => async (event) => {
   event.stopPropagation();
 
   stopRowEditing(id, apiRef);
@@ -115,7 +115,7 @@ const handleCancelClick = (id, apiRef) => (event) => {
 
 function onLoadSuccess(id, apiRef) {
   updateRowState(id, RowState.LoadSuccess, apiRef);
-  console.log("s");
+
   setTimeout(() => {
     updateRowState(id, RowState.Loaded, apiRef);
   }, 1500);
@@ -123,7 +123,6 @@ function onLoadSuccess(id, apiRef) {
 
 function onLoadFail(id, apiRef) {
   updateRowState(id, RowState.LoadFail, apiRef);
-  console.log(`f ${id}`);
 
   setTimeout(() => {
     startRowEditing(id, apiRef);
@@ -133,4 +132,4 @@ function onLoadFail(id, apiRef) {
 function createGermplasm() {}
 function updateGermplasm() {}
 
-export { rowAction };
+export { actionColumn };

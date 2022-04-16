@@ -31,7 +31,7 @@ const MenuButton = ({ presenter, sx }) => {
             bgcolor: isCurrentLocation
               ? "background.activeMenuButton"
               : "background.menuButton",
-            margin: "16px",
+            margin: "0 16px 16px 16px",
           },
         }),
     ...(hasSubMenu && { onClick: handleClick }),

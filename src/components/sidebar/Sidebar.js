@@ -5,11 +5,13 @@ import List from "@mui/material/List";
 import { Typography, Button } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Box } from "@mui/system";
+import Divider from "@mui/material/Divider";
 
-import MenuButtonPresenter from "../../../presenters/MenuButtonPresenter";
-import MenuButton from "../common/MenuButton";
+import MenuButtonPresenter from "../../presenters/MenuButtonPresenter";
+import MenuButton from "./MenuButton";
 
 const presenters = [
+  new MenuButtonPresenter("Dashboard", "/dashboard"),
   new MenuButtonPresenter("Cold Room Storage", "/cold-room-storage"),
   new MenuButtonPresenter("Breeding Nursery", "", [
     new MenuButtonPresenter("BNIWJD", "/breeding-nursery/BNIWJD"),
@@ -35,14 +37,23 @@ const Sidebar = () => {
       sx={{
         display: "flex",
         flexDirection: "column",
-        width: "272px",
+        width: "240px",
         boxShadow: 10,
         padding: 0,
       }}
     >
       <Logo />
-      <MenuList />
       <Season />
+      <Divider
+        sx={{
+          bgcolor: "white",
+          height: "2px",
+          margin: "16px 24px",
+          border: "none",
+          borderRadius: 16,
+        }}
+      />
+      <MenuList />
     </Box>
   );
 };
@@ -51,7 +62,7 @@ const Logo = () => {
   const theme = useTheme();
 
   return (
-    <Box sx={{ textAlign: "center", margin: "48px 0 16px 0" }}>
+    <Box sx={{ textAlign: "center", margin: "48px 0 32px 0" }}>
       <Typography
         style={{
           background: theme.palette.background.sidebarTitle,
@@ -74,7 +85,7 @@ const MenuList = () => {
   const location = useLocation().pathname;
 
   return (
-    <List sx={{ flex: 1, overflow: "auto" }}>
+    <List sx={{ flex: 1, overflow: "auto", padding: 0 }}>
       {presenters.map((presenter) => (
         <MenuButton
           presenter={presenter}
@@ -92,14 +103,15 @@ const Season = () => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        padding: "24px",
+        margin: "0 16px",
       }}
     >
       <Button
         sx={{
+          width: "100%",
+          borderRadius: 24,
+          bgcolor: "background.menuButton",
           color: "black",
-          width: "240px",
-          background: "white",
         }}
       >
         Year 2021 Season1

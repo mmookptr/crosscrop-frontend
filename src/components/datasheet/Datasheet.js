@@ -4,12 +4,12 @@ import { useDispatch } from "react-redux";
 import { Box } from "@mui/system";
 import { useGridApiRef, DataGridPro } from "@mui/x-data-grid-pro";
 
-import { rowAction } from "./RowAction";
+import { actionColumn } from "./ActionColumn";
 import { Toolbar } from "./Toolbar";
 
 import { getSelectedGermplasm } from "../../slices/germplasmSlice.js";
 
-const Datasheet = ({ presenter }) => {
+const Datasheet = ({ presenter, isLoading, isError, addEvent }) => {
   const apiRef = useGridApiRef();
   const dispatch = useDispatch();
   const [columns, setColumnsState] = useState(presenter.columns);
@@ -27,9 +27,8 @@ const Datasheet = ({ presenter }) => {
   };
 
   const addNewColumn = (name, type) => {
-    console.log(columns);
     const newColumns = [...columns, { field: name, type: type }];
-    console.log(newColumns);
+
     setColumnsState(newColumns);
   };
 
@@ -37,9 +36,10 @@ const Datasheet = ({ presenter }) => {
     <Box sx={{ flex: 1 }}>
       <DataGridPro
         rows={presenter.rows}
-        columns={[...columns, rowAction(apiRef)]}
+        columns={[...columns, actionColumn(apiRef, addEvent)]}
         initialState={{
           pinnedColumns: {
+            left: ["__check__", "id", "name"],
             right: ["actions"],
           },
         }}
@@ -48,6 +48,8 @@ const Datasheet = ({ presenter }) => {
         onSelectionModelChange={(item) => {
           dispatch(getSelectedGermplasm(item));
         }}
+        error={isError}
+        loading={isLoading}
         sx={{
           borderRadius: "24px",
           bgcolor: "#ffffff",
@@ -63,7 +65,7 @@ const Datasheet = ({ presenter }) => {
           Toolbar: Toolbar,
         }}
         componentsProps={{
-          toolbar: { apiRef, addNewColumn },
+          toolbar: { apiRef, addEvent },
         }}
         experimentalFeatures={{ newEditingApi: true }}
       />

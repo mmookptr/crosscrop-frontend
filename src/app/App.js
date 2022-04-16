@@ -5,7 +5,7 @@ import { Box } from "@mui/system";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import AppRoutes from "./AppRoutes";
-import Sidebar from "../components/sidebar/definition/Sidebar";
+import Sidebar from "../components/sidebar/Sidebar";
 
 const theme = createTheme({
   palette: {

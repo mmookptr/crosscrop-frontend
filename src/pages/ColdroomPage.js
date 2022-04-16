@@ -11,6 +11,7 @@ import { GermplasmListPageEvent as Event } from "./germplasmListPage/GermplasmLi
 import { ColdroomRepository } from "../repositories/ColdroomRepository";
 
 const ColdroomPage = () => {
+  const pageTitle = "Coldroom Storage";
   const { id } = useParams();
   const [pageState, setPageState] = useState(new State.StartState());
   const repository = new ColdroomRepository(AppConfig.BaseURL);
@@ -20,17 +21,51 @@ const ColdroomPage = () => {
   };
 
   const handleEvent = async (event) => {
-    if (event instanceof Event.LoadDataEvent) {
-      loadData();
-
-      setPageState(new State.LoadingState());
+    if (event instanceof Event.StartEvent) {
+      startEventToState();
+    } else if (event instanceof Event.LoadDataEvent) {
+      loadDataEventToState();
     } else if (event instanceof Event.LoadSuccessEvent) {
-      setPageState(new State.LoadSuccessState(event.presenter));
+      loadSuccessEventToState(event);
     } else if (event instanceof Event.LoadFailEvent) {
-      setPageState(new State.LoadFailState(event.error));
+      LoadFailEventToState(event);
     } else {
-      console.log(`Invalid Event ${event}`);
+      throw new Error(`Invalid Page Event ${event}`);
     }
+  };
+
+  const startEventToState = () => {
+    addEvent(new Event.LoadDataEvent());
+  };
+
+  const loadDataEventToState = () => {
+    loadData();
+
+    const presenter = new GermplasmListPagePresenter(
+      pageTitle,
+      id,
+      [],
+      true,
+      false
+    );
+
+    setPageState(new State.LoadingState(presenter));
+  };
+
+  const loadSuccessEventToState = (event) => {
+    setPageState(new State.LoadSuccessState(event.presenter));
+  };
+
+  const LoadFailEventToState = (event) => {
+    const presenter = new GermplasmListPagePresenter(
+      pageTitle,
+      id,
+      [],
+      false,
+      true
+    );
+
+    setPageState(new State.LoadFailState(presenter, event.error));
   };
 
   const loadData = async () => {
@@ -43,7 +78,9 @@ const ColdroomPage = () => {
         coldroom.germplasms
       );
 
-      addEvent(new Event.LoadSuccessEvent(presenter));
+      setTimeout(() => {
+        addEvent(new Event.LoadSuccessEvent(presenter));
+      }, 1500);
     } catch (error) {
       addEvent(new Event.LoadFailEvent(error.message));
     }

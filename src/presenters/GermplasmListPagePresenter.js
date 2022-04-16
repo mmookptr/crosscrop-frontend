@@ -1,7 +1,13 @@
 import _ from "lodash";
 
 class GermplasmListPagePresenter {
-  constructor(pageTitle, pageSubTitle, germplasms) {
+  constructor(
+    pageTitle,
+    pageSubTitle,
+    germplasms,
+    isLoading = false,
+    isError = false
+  ) {
     this.pageTitle = pageTitle;
     this.pageSubTitle = pageSubTitle;
 
@@ -9,6 +15,9 @@ class GermplasmListPagePresenter {
       this.createRowsAndColumnsFromGermplasms(germplasms);
     this.rows = rows;
     this.columns = columns;
+
+    this.isLoading = isLoading;
+    this.isError = isError;
   }
 
   createRowsAndColumnsFromGermplasms(germplasms) {

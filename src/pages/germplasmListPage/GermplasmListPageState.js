@@ -8,15 +8,19 @@ class GermplasmListPageState {
 }
 
 class StartState {}
-class LoadingState {}
+class LoadingState {
+  constructor(presenter) {
+    this.presenter = presenter;
+  }
+}
 class LoadSuccessState {
   constructor(presenter) {
     this.presenter = presenter;
   }
 }
 class LoadFailState {
-  constructor(error) {
-    this.error = error;
+  constructor(presenter) {
+    this.presenter = presenter;
   }
 }
 

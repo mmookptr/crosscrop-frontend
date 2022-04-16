@@ -69,21 +69,9 @@ function updateRowState(id, rowState, apiRef) {
   apiRef.current.updateRows([{ id, __state: rowState }]);
 }
 
-const createNewColumn = (name, type, setColumnsState, apiRef) => () => {
-  const columns = [
-    ...__getColumns(apiRef).map((column) => {
-      return { name: column.name, type: column.type };
-    }),
-    { name: name, type: type },
-  ];
-
-  setColumnsState(columns);
-};
-
 export {
   getRow,
   createNewRow,
-  createNewColumn,
   startRowEditing,
   stopRowEditing,
   deleteRow,

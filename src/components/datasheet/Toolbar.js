@@ -7,65 +7,42 @@ import {
 } from "@mui/x-data-grid-pro";
 
 import { Box } from "@mui/system";
-import AddIcon from "@mui/icons-material/Add";
-import { Button } from "@mui/material";
 
-import { createNewRow, createNewColumn } from "./Usecase";
+import { createNewRow } from "./Usecase";
+import { AddRecordToolbarButton } from "./AddRecordToolbarButton";
+import { AddColumnToolbarButton } from "./AddColumnToolbarButton";
 
-const Toolbar = ({ apiRef, addNewColumn }) => {
+const Toolbar = ({ apiRef, addEvent }) => {
+  const toolbarButtonSx = {
+    color: "#f199af",
+    fontWeight: "bold",
+    fontSize: 13,
+  };
+
   return (
     <GridToolbarContainer
-      sx={{ margin: "8px", display: "flex", justifyContent: "space-between" }}
+      sx={{
+        margin: "0",
+        padding: "4px 8px",
+        display: "flex",
+        justifyContent: "space-between",
+      }}
     >
       <Box>
-        <GridToolbarColumnsButton
-          sx={{
-            color: "#f199af",
-            fontWeight: "bold",
-          }}
-        />
-        <GridToolbarFilterButton
-          sx={{
-            color: "#f199af",
-            fontWeight: "bold",
-          }}
-        />
-        <GridToolbarDensitySelector
-          sx={{
-            color: "#f199af",
-            fontWeight: "bold",
-          }}
-        />
-        <GridToolbarExport
-          sx={{
-            color: "#f199af",
-            fontWeight: "bold",
-          }}
-        />
+        <GridToolbarColumnsButton sx={toolbarButtonSx} />
+        <GridToolbarFilterButton sx={toolbarButtonSx} />
+        <GridToolbarDensitySelector sx={toolbarButtonSx} />
+        <GridToolbarExport sx={toolbarButtonSx} />
       </Box>
 
-      <Button
-        color="primary"
-        sx={{
-          color: "#f199af",
-          fontWeight: "bold",
-        }}
-        startIcon={<AddIcon />}
-        onClick={() => addNewColumn("test", "string")}
-      >
-        Add Column
-      </Button>
-      <Button
-        color="primary"
-        sx={{
-          color: "#f199af",
-          fontWeight: "bold",
-        }}
-        startIcon={<AddIcon />}
-        onClick={createNewRow(apiRef)}
-      >
-        Add record
-      </Button>
+      <Box sx={{ display: "flex" }}>
+        <AddColumnToolbarButton sx={toolbarButtonSx} addEvent={addEvent} />
+
+        <AddRecordToolbarButton
+          sx={toolbarButtonSx}
+          onClick={createNewRow(apiRef)}
+        />
+      </Box>
     </GridToolbarContainer>
   );
 };

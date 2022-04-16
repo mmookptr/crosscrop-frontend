@@ -1,7 +1,7 @@
 import { React, useEffect } from "react";
 
 import { Box } from "@mui/system";
-import { Typography, CircularProgress } from "@mui/material";
+import { Typography } from "@mui/material";
 
 import Datasheet from "../../components/datasheet/Datasheet";
 import MoveGermplasmButton from "../../components/MoveGermplasmButton";
@@ -11,60 +11,50 @@ import { GermplasmListPageEvent as Event } from "./GermplasmListPageEvent";
 const GermplasmListPage = ({ state, addEvent }) => {
   useEffect(() => {
     if (state instanceof State.StartState) {
-      addEvent(new Event.LoadDataEvent());
+      addEvent(new Event.StartEvent());
     }
   });
 
   if (state instanceof State.StartState) {
     return <Box></Box>;
   } else if (state instanceof State.LoadingState) {
-    return <LoadingPage />;
+    return <LoadingPage presenter={state.presenter} />;
   } else if (state instanceof State.LoadSuccessState) {
     return <LoadedPage presenter={state.presenter} />;
   } else if (state instanceof State.LoadFailState) {
-    return <LoadFailPage errorMessage={state.error} />;
+    return <LoadFailPage presenter={state.presenter} />;
   }
-  return <LoadFailPage errorMessage={"Invalid Page State"} />;
+  return <LoadFailPage presenter={state.presenter} />;
 };
 
-const LoadingPage = () => {
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        height: "100%",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <CircularProgress size={56} />
-    </Box>
-  );
+const LoadingPage = ({ presenter }) => {
+  return <PageContent presenter={presenter} isLoading={true} />;
 };
 
 const LoadedPage = ({ presenter }) => {
+  return <PageContent presenter={presenter} />;
+};
+
+const LoadFailPage = ({ presenter }) => {
+  return <PageContent presenter={presenter} isError={true} />;
+};
+
+const PageContent = ({ presenter, isLoading, isError, addEvent }) => {
   return (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Box sx={{ paddingLeft: "16px" }}>
+      <Box sx={{ paddingLeft: "16px", marginTop: "17px" }}>
         <Typography display="block" variant="pageTitle">
           {presenter.pageTitle}
         </Typography>
         <Typography variant="pageSubTitle">{presenter.pageSubTitle}</Typography>
       </Box>
       <MoveGermplasmButton />
-      <Datasheet presenter={presenter} />
-    </Box>
-  );
-};
-
-const LoadFailPage = ({ errorMessage }) => {
-  return (
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Box sx={{ paddingLeft: "16px" }}>
-        <Typography variant="pageTitle">Error Occurred</Typography>
-        <br />
-        <Typography variant="pageSubTitle">{errorMessage}</Typography>
-      </Box>
+      <Datasheet
+        presenter={presenter}
+        isError={isError}
+        isLoading={isLoading}
+        addEvent={addEvent}
+      />
     </Box>
   );
 };

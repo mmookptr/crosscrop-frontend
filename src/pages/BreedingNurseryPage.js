@@ -36,14 +36,15 @@ const BreedingNurseryPage = () => {
   const loadData = async () => {
     try {
       const coldroom = await repository.getBreedingNurseryById(id);
-
       const presenter = new GermplasmListPagePresenter(
         "BreedingNursery Storage",
         id,
         coldroom.germplasms
       );
 
-      addEvent(new Event.LoadSuccessEvent(presenter));
+      setTimeout(() => {
+        addEvent(new Event.LoadSuccessEvent(presenter));
+      }, 1500);
     } catch (error) {
       addEvent(new Event.LoadFailEvent(error.message));
     }
