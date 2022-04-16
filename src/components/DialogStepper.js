@@ -6,17 +6,19 @@ import {
   Step,
   StepLabel,
   Button,
-  Typography
+  Typography,
 } from '@mui/material';
 
-import SelectDestinationForm from "./SelectDestinationForm";
+import SelectWorkflowForm from "./SelectWorkflowForm";
+import SelectProjectForm from './SelectProjectForm';
+import SummaryForm from './SummaryForm';
 
-const steps = ['Select destination', 'Name new file', 'Summary'];
+const steps = ['Select workflow', 'Select project', 'Summary'];
 
 const DialogStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
 
-  const formSteps = [<SelectDestinationForm/>, 'step2 name', 'step3 summary']
+  const formSteps = [<SelectWorkflowForm/>, <SelectProjectForm/>]
 
   const handleNext = () => {
 
@@ -27,38 +29,28 @@ const DialogStepper = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
   };
 
-  const handleReset = () => {
-    setActiveStep(0);
+  const handleConfirm = () => {
+    console.log("All steps done")
   };
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '480px', height: "320px" }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
-          const stepProps = {};
+          const stepProps = {}
           const labelProps = {};
           return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+            <Step key={label}>
+              <StepLabel 
+              {...labelProps} 
+              >{label}</StepLabel>
             </Step>
           );
         })}
       </Stepper>
-      {activeStep === steps.length ? (
+      {activeStep === steps.length - 1 ? (
         <Box>
-          <Typography sx={{ mt: 2, mb: 1 }}>
-            All steps completed - you&apos;re finished
-          </Typography>
-          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-            <Box sx={{ flex: '1 1 auto' }} />
-            <Button onClick={handleReset}>Reset</Button>
-          </Box>
-        </Box>
-      ) : (
-        <Box>
-          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
-          {formSteps[activeStep]}
-          
+          <SummaryForm/>
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -68,10 +60,25 @@ const DialogStepper = () => {
             >
               Back
             </Button>
-  
-
+            <Box sx={{ flex: '1 1 auto' }} />
+              <Button onClick={handleConfirm}>Confirm</Button>
+            </Box>
+        </Box>
+      ) : (
+        <Box>
+          {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
+          {formSteps[activeStep]}
+          <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+            <Button
+              color="inherit"
+              disabled={activeStep === 0}
+              onClick={handleBack}
+              sx={{ mr: 1 }}
+            >
+              Back
+            </Button>
             <Button onClick={handleNext}>
-              {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+              {activeStep === steps.length - 1  ? 'Continue' : 'Next'}
             </Button>
           </Box>
         </Box>
