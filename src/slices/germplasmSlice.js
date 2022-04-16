@@ -1,21 +1,30 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { ids: [], destination: 'to where'}
+const initialState = { 
+  ids: [], 
+  workflow: '',
+  moveGermplasmAction: 'add-to-project',
+  projectId: ''
+}
 const germplasmSlice = createSlice({
   name: 'germplasm', 
   initialState,
   reducers: {
     getSelectedGermplasm: (state, action) => {
-      const selectedGermplasm = action.payload
-      state.ids = selectedGermplasm
+      state.ids = action.payload
     },
-    getSelectedDestination: (state, action) => {
-      const selectedDestination = action.payload
-      state.destination = selectedDestination
+    getSelectedWorkflow: (state, action) => {
+      state.workflow = action.payload
+    },
+    getProjectId: (state, action) => {
+      state.projectId = action.payload
+    },
+    getMoveGermplasmAction: (state, action) => {
+      state.moveGermplasmAction = action.payload
     }
   }
 })
 
-export const {getSelectedGermplasm, getSelectedDestination} = germplasmSlice.actions
+export const {getSelectedGermplasm, getSelectedWorkflow, getProjectId, getMoveGermplasmAction} = germplasmSlice.actions
 
 export default germplasmSlice.reducer
