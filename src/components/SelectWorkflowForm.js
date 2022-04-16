@@ -1,7 +1,7 @@
 import { React, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Box, FormControl, Select, MenuItem } from '@mui/material';
+import { Box, FormControl, Select, MenuItem, Typography, InputLabel } from '@mui/material';
 
 import { getSelectedWorkflow } from "../slices/germplasmSlice.js"
 
@@ -16,22 +16,21 @@ const SelectWorkflowForm = () => {
   };
 
   return (
-    <Box sx={{marginLeft: "36px"}}>
-      <h2>Move {selectedGermplasmCount} rows to:</h2>
+    <Box sx={{margin: "36px"}}>
+      <Typography variant="stepperTitle" display="block">Move {selectedGermplasmCount} rows to:</Typography>
       <FormControl variant="filled" sx={{ m: 1, minWidth: 240 }}>
-          <Select value={selected}
-            onChange={handleChange}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-            label="Destination Flow"
-            sx={{bgcolor: "#fffaf9"}}
-          >             
-            <MenuItem value={"cold-room-storage"}>Cold Room Storage</MenuItem>
-            <MenuItem value={"breeding-nursery"}>Breeding Nursery</MenuItem>
-            <MenuItem value={"crossing-block"}>Crossing Block</MenuItem>
-            <MenuItem value={"yield-trial"}>Yield Trial</MenuItem>
-          </Select>
-        </FormControl>
+      <InputLabel id="choose-workflow">Choose Workflow</InputLabel>
+      <Select value={selected}
+        onChange={handleChange}
+        label="Destination Flow"
+        sx={{bgcolor: "#fffaf9"}}
+      >             
+        <MenuItem value={"cold-room-storage"}>Cold Room Storage</MenuItem>
+        <MenuItem value={"breeding-nursery"}>Breeding Nursery</MenuItem>
+        <MenuItem value={"crossing-block"}>Crossing Block</MenuItem>
+        <MenuItem value={"yield-trial"}>Yield Trial</MenuItem>
+      </Select>
+      </FormControl>
     </Box>
   )
 }

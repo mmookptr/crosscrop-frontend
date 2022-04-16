@@ -14,6 +14,7 @@ const theme = createTheme({
 			activeMenuButton: "#f4cac3",
 			sidebar: "linear-gradient(90deg, #f4f2ea 0%, #f9eaed 100%)",
 			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%)",
+			stepperIcon: "#efb9c6 !important"
 		},
 	},
 	components: {
@@ -24,7 +25,17 @@ const theme = createTheme({
 				},
 			},
 		},
+		MuiStepper: {
+			styleOverrides: {
+				root: {
+					"& .Mui-active": { color: "#f44d75 !important" },
+					"& .Mui-disabled .MuiStepIcon-root": { color: "lightgrey !important" },
+					"& .Mui-completed": {color: "#f0bbc6 !important"},
+				},
+			},
+		},
 	},
+
 	typography: {
 		fontFamily: ["Nunito Sans"],
 		pageTitle: {

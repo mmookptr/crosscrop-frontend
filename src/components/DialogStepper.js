@@ -6,7 +6,7 @@ import {
   Step,
   StepLabel,
   Button,
-  Typography
+  Typography,
 } from '@mui/material';
 
 import SelectWorkflowForm from "./SelectWorkflowForm";
@@ -37,11 +37,13 @@ const DialogStepper = () => {
     <Box sx={{ width: '100%' }}>
       <Stepper activeStep={activeStep}>
         {steps.map((label, index) => {
-          const stepProps = {};
+          const stepProps = {}
           const labelProps = {};
           return (
-            <Step key={label} {...stepProps}>
-              <StepLabel {...labelProps}>{label}</StepLabel>
+            <Step key={label}>
+              <StepLabel 
+              {...labelProps} 
+              >{label}</StepLabel>
             </Step>
           );
         })}
@@ -66,7 +68,6 @@ const DialogStepper = () => {
         <Box>
           {/* <Typography sx={{ mt: 2, mb: 1 }}>Step {activeStep + 1}</Typography> */}
           {formSteps[activeStep]}
-          
           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
             <Button
               color="inherit"
@@ -76,8 +77,6 @@ const DialogStepper = () => {
             >
               Back
             </Button>
-  
-
             <Button onClick={handleNext}>
               {activeStep === steps.length - 1  ? 'Continue' : 'Next'}
             </Button>
