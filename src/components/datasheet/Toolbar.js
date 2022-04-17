@@ -12,9 +12,8 @@ import { createNewRow } from "./Usecase";
 import { AddRecordToolbarButton } from "./AddRecordToolbarButton";
 import { AddColumnToolbarButton } from "./AddColumnToolbarButton";
 
-const Toolbar = ({ apiRef, addEvent }) => {
+const Toolbar = ({ apiRef, addColumn }) => {
   const toolbarButtonSx = {
-    color: "#f199af",
     fontWeight: "bold",
     fontSize: 13,
   };
@@ -36,7 +35,7 @@ const Toolbar = ({ apiRef, addEvent }) => {
       </Box>
 
       <Box sx={{ display: "flex" }}>
-        <AddColumnToolbarButton sx={toolbarButtonSx} addEvent={addEvent} />
+        <AddColumnToolbarButton sx={toolbarButtonSx} addColumn={addColumn} />
 
         <AddRecordToolbarButton
           sx={toolbarButtonSx}

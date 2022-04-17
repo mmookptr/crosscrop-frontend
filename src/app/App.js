@@ -9,6 +9,12 @@ import Sidebar from "../components/sidebar/Sidebar";
 
 const theme = createTheme({
   palette: {
+    primary: {
+      main: "#f199af",
+    },
+    secondary: {
+      main: "#fffaf9",
+    },
     background: {
       menuButton: "#ffffff",
       activeMenuButton: "#f4cac3",

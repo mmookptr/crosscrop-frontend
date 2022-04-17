@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 
 import { AddColumnDialog } from "./AddColumnDialog";
 
-const AddColumnToolbarButton = ({ sx, addEvent }) => {
+const AddColumnToolbarButton = ({ sx, addColumn }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -27,7 +27,11 @@ const AddColumnToolbarButton = ({ sx, addEvent }) => {
       >
         {"Add Column"}
       </Button>
-      <AddColumnDialog open={open} onClose={handleClose} addEvent={addEvent} />
+      <AddColumnDialog
+        open={open}
+        onClose={handleClose}
+        addColumn={addColumn}
+      />
     </Box>
   );
 };

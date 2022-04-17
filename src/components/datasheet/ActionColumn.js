@@ -15,8 +15,9 @@ import {
 import { RowState } from "./RowState";
 
 import { GridActionsCellItem } from "@mui/x-data-grid";
+import { Germplasm } from "../../models/Germplasm";
 
-const actionColumn = (apiRef, addEvent) => {
+const actionColumn = (apiRef, addRecord, updateRecord, removeRecord) => {
   return {
     field: "actions",
     type: "actions",
@@ -38,7 +39,7 @@ const actionColumn = (apiRef, addEvent) => {
             <GridActionsCellItem
               icon={<SaveIcon />}
               label="Save"
-              onClick={handleSaveClick(id, apiRef, addEvent)}
+              onClick={handleSaveClick(id, apiRef, addRecord, updateRecord)}
               color="primary"
             />,
             <GridActionsCellItem
@@ -61,7 +62,7 @@ const actionColumn = (apiRef, addEvent) => {
             <GridActionsCellItem
               icon={<DeleteIcon />}
               label="Delete"
-              onClick={handleDeleteClick(id, apiRef)}
+              onClick={handleDeleteClick(id, apiRef, removeRecord)}
               color="inherit"
             />,
           ];
@@ -76,30 +77,39 @@ const handleEditClick = (id, apiRef) => (event) => {
   startRowEditing(id, apiRef);
 };
 
-const handleSaveClick = (id, apiRef, addEvent) => async (event) => {
+const handleSaveClick =
+  (id, apiRef, addRecord, updateRecord) => async (event) => {
+    event.stopPropagation();
+
+    stopRowEditing(id, apiRef);
+
+    const row = getRow(id, apiRef);
+    console.log(Germplasm.fromDatasheetRow(row));
+    if (row.isNew) {
+      createGermplasm(addRecord);
+      setTimeout(() => {
+        onSaveSuccess(id, apiRef);
+      }, 1500);
+    } else {
+      updateGermplasm(updateRecord);
+      setTimeout(() => {
+        onSaveFail(id, apiRef);
+      }, 1500);
+    }
+  };
+
+const handleDeleteClick = (id, apiRef, removeRecord) => (event) => {
   event.stopPropagation();
 
-  stopRowEditing(id, apiRef);
+  updateRowState(id, RowState.Loading, apiRef);
 
-  const row = getRow(id, apiRef);
+  try {
+    removeRecord(id);
 
-  if (row.isNew) {
-    createGermplasm();
-    setTimeout(() => {
-      onLoadSuccess(id, apiRef);
-    }, 1500);
-  } else {
-    updateGermplasm();
-    setTimeout(() => {
-      onLoadFail(id, apiRef);
-    }, 1500);
+    deleteRow(id, apiRef);
+  } catch (error) {
+    onDeleteFail(id, apiRef);
   }
-};
-
-const handleDeleteClick = (id, apiRef) => (event) => {
-  event.stopPropagation();
-
-  deleteRow(id, apiRef);
 };
 
 const handleCancelClick = (id, apiRef) => (event) => {
@@ -113,7 +123,7 @@ const handleCancelClick = (id, apiRef) => (event) => {
   }
 };
 
-function onLoadSuccess(id, apiRef) {
+function onSaveSuccess(id, apiRef) {
   updateRowState(id, RowState.LoadSuccess, apiRef);
 
   setTimeout(() => {
@@ -121,7 +131,7 @@ function onLoadSuccess(id, apiRef) {
   }, 1500);
 }
 
-function onLoadFail(id, apiRef) {
+function onSaveFail(id, apiRef) {
   updateRowState(id, RowState.LoadFail, apiRef);
 
   setTimeout(() => {
@@ -129,7 +139,15 @@ function onLoadFail(id, apiRef) {
   }, 1500);
 }
 
-function createGermplasm() {}
+function onDeleteFail(id, apiRef) {
+  updateRowState(id, RowState.LoadFail, apiRef);
+
+  setTimeout(() => {
+    updateRowState(id, RowState.Loaded, apiRef);
+  }, 1500);
+}
+
+function createGermplasm(addRecord) {}
 function updateGermplasm() {}
 
 export { actionColumn };

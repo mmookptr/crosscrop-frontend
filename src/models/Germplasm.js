@@ -4,8 +4,6 @@ class Germplasm {
     if (name === undefined) throw new Error("Germplasm name: undefined");
     if (attributes === undefined)
       throw new Error("Germplasm attributes: undefined");
-    if (createdOn === undefined)
-      throw new Error("Germplasm createdOn: undefined");
 
     this.id = id;
     this.name = name;
@@ -22,6 +20,27 @@ class Germplasm {
       json["created_on"],
       json["updated_on"]
     );
+  }
+
+  static fromDatasheetRow(row) {
+    const id = row.values.id;
+    const name = row.values.name;
+    const attributes = row.columns
+      .filter(
+        (attribute) =>
+          !["id", "name", "createdOn", "updatedOn"].includes(attribute.name)
+      )
+      .map((attribute) => {
+        const attributeName = attribute.name;
+        const attributeType = attribute.type;
+        const value = row.values[attributeName];
+
+        return new GermplasmAttribute(attributeName, attributeType, value);
+      });
+
+    const germplasm = new Germplasm(id, name, attributes);
+
+    return germplasm;
   }
 }
 

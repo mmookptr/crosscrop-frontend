@@ -28,7 +28,7 @@ const ColdroomPage = () => {
     } else if (event instanceof Event.LoadSuccessEvent) {
       loadSuccessEventToState(event);
     } else if (event instanceof Event.LoadFailEvent) {
-      LoadFailEventToState(event);
+      loadFailEventToState(event);
     } else {
       throw new Error(`Invalid Page Event ${event}`);
     }
@@ -56,7 +56,7 @@ const ColdroomPage = () => {
     setPageState(new State.LoadSuccessState(event.presenter));
   };
 
-  const LoadFailEventToState = (event) => {
+  const loadFailEventToState = (event) => {
     const presenter = new GermplasmListPagePresenter(
       pageTitle,
       id,

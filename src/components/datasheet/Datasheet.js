@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { useDispatch } from "react-redux";
 
 import { Box } from "@mui/system";
@@ -7,12 +7,22 @@ import { useGridApiRef, DataGridPro } from "@mui/x-data-grid-pro";
 import { actionColumn } from "./ActionColumn";
 import { Toolbar } from "./Toolbar";
 
+import { ColumnOption } from "./ColumnOption";
+
 import { getSelectedGermplasm } from "../../slices/germplasmSlice.js";
 
-const Datasheet = ({ presenter, isLoading, isError, addEvent }) => {
+const Datasheet = ({
+  presenter,
+  isLoading,
+  isError,
+  addColumn,
+  removeColumn,
+  addRecord,
+  updateRecord,
+  removeRecord,
+}) => {
   const apiRef = useGridApiRef();
   const dispatch = useDispatch();
-  const [columns, setColumnsState] = useState(presenter.columns);
 
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
@@ -26,17 +36,14 @@ const Datasheet = ({ presenter, isLoading, isError, addEvent }) => {
     return newRow;
   };
 
-  const addNewColumn = (name, type) => {
-    const newColumns = [...columns, { field: name, type: type }];
-
-    setColumnsState(newColumns);
-  };
-
   return (
     <Box sx={{ flex: 1 }}>
       <DataGridPro
         rows={presenter.rows}
-        columns={[...columns, actionColumn(apiRef, addEvent)]}
+        columns={[
+          ...presenter.columns,
+          actionColumn(apiRef, addRecord, updateRecord, removeRecord),
+        ]}
         initialState={{
           pinnedColumns: {
             left: ["__check__", "id", "name"],
@@ -63,9 +70,10 @@ const Datasheet = ({ presenter, isLoading, isError, addEvent }) => {
         processRowUpdate={processRowUpdate}
         components={{
           Toolbar: Toolbar,
+          ColumnMenu: ColumnOption(removeColumn),
         }}
         componentsProps={{
-          toolbar: { apiRef, addEvent },
+          toolbar: { apiRef, addColumn },
         }}
         experimentalFeatures={{ newEditingApi: true }}
       />
