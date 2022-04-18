@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { Box } from "@mui/system";
@@ -6,6 +7,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import AppRoutes from "./AppRoutes";
 import Sidebar from "../components/sidebar/definition/Sidebar";
+import LoginPage from "../components/LoginPage";
 
 const theme = createTheme({
 	palette: {
@@ -14,8 +16,13 @@ const theme = createTheme({
 			activeMenuButton: "#f4cac3",
 			sidebar: "linear-gradient(90deg, #f4f2ea 0%, #f9eaed 100%)",
 			sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%)",
-			stepperIcon: "#efb9c6 !important"
+			stepperIcon: "#efb9c6 !important",
+			loginButton: "#f4be32",
+			registerButton: "#eadda5"
 		},
+		textInput: {
+			main: "#f44f73",
+		}
 	},
 	components: {
 		MuiCollapse: {
@@ -35,7 +42,6 @@ const theme = createTheme({
 			},
 		},
 	},
-
 	typography: {
 		fontFamily: ["Nunito Sans"],
 		pageTitle: {
@@ -57,20 +63,35 @@ const theme = createTheme({
 			fontSize: "20px",
 			fontWeight:  "bold"
 		},
+		loginPanelHeader: {
+			fontSize: "84px",
+			fontWeight: "bold",
+		},
+		loginPanelSubheader: {
+			fontSize: "36px",
+			// fontWeight: "bold",
+		}
 	},
+	
 });
 
 function App() {
+	const authentication = useSelector(state => state.authentication)
 	return (
 		<ThemeProvider theme={theme}>
 			<BrowserRouter>
 				<Box sx={{ display: "flex", height: "100%" }}>
-					<Sidebar />
-					<AppRoutes />
+					{authentication.isLogin ? (
+						<>
+							<Sidebar/>
+							<AppRoutes/>
+						</>
+					)
+					: <LoginPage/>}
 				</Box>
 			</BrowserRouter>
 		</ThemeProvider>
 	);
-}
+} 
 
 export default App;
