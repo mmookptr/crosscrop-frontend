@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 
 import { Box } from "@mui/system";
@@ -21,6 +22,9 @@ const theme = createTheme({
       sidebar: "linear-gradient(90deg, #f4f2ea 0%, #f9eaed 100%)",
       sidebarTitle: "linear-gradient(270deg, #f4d60a 0%, #f54d75 100%)",
       stepperIcon: "#efb9c6 !important",
+    },
+    textInput: {
+      main: "#f44f73",
     },
   },
   components: {
@@ -71,6 +75,14 @@ const theme = createTheme({
     stepperTitle: {
       fontSize: "20px",
       fontWeight: "bold",
+    },
+    loginPanelHeader: {
+      fontSize: "84px",
+      fontWeight: "bold",
+    },
+    loginPanelSubheader: {
+      fontSize: "36px",
+      // fontWeight: "bold",
     },
   },
 });
