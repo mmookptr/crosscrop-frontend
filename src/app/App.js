@@ -6,7 +6,8 @@ import { Box } from "@mui/system";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 import AppRoutes from "./AppRoutes";
-import Sidebar from "../components/sidebar/Sidebar";
+import Sidebar from "../Component/Sidebar/Sidebar";
+import LoginPage from "../Page/LoginPage";
 
 const theme = createTheme({
   palette: {
@@ -88,12 +89,20 @@ const theme = createTheme({
 });
 
 function App() {
+  const authentication = useSelector((state) => state.authentication);
+
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Box sx={{ display: "flex", height: "100%" }}>
-          <Sidebar />
-          <AppRoutes />
+          {authentication.isLogin ? (
+            <>
+              <Sidebar />
+              <AppRoutes />
+            </>
+          ) : (
+            <LoginPage />
+          )}
         </Box>
       </BrowserRouter>
     </ThemeProvider>

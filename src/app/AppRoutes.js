@@ -3,10 +3,10 @@ import { Routes, Route } from "react-router-dom";
 
 import { Box } from "@mui/system";
 
-import { ColdroomPage } from "../pages/ColdroomPage";
-import { BreedingNurseryPage } from "../pages/BreedingNurseryPage";
-import { CrossingBlockPage } from "../pages/CrossingBlockPage";
-import { YieldTrialPage } from "../pages/YieldTrialPage";
+import { ColdroomPage } from "../Page/ColdroomPage";
+import { BreedingNurseryPage } from "../Page/BreedingNurseryPage";
+import { CrossingBlockPage } from "../Page/CrossingBlockPage";
+import { YieldTrialPage } from "../Page/YieldTrialPage";
 
 const AppRoutes = () => {
   return (
