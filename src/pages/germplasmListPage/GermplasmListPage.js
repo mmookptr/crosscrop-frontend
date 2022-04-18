@@ -4,7 +4,7 @@ import { Box } from "@mui/system";
 import { Typography } from "@mui/material";
 
 import Datasheet from "../../components/datasheet/Datasheet";
-import MoveGermplasmButton from "../../components/MoveGermplasmButton";
+import { MoveGermplasmButton } from "../../components/MoveGermplasmButton";
 import { GermplasmListPageState as State } from "./GermplasmListPageState";
 import { GermplasmListPageEvent as Event } from "./GermplasmListPageEvent";
 
@@ -14,6 +14,82 @@ const GermplasmListPage = ({ state, addEvent }) => {
       addEvent(new Event.StartEvent());
     }
   });
+
+  const addColumn = (name, type) => {
+    addEvent(new Event.AddGermplasmAttributeEvent(name, type));
+  };
+
+  const removeColumn = (name) => {
+    addEvent(new Event.RemoveGermplasmAttributeEvent(name));
+  };
+
+  const addRecord = (germplasm) => {
+    addEvent(new Event.AddGermplasmEvent(germplasm));
+  };
+
+  const updateRecord = (germplasm) => {
+    addEvent(new Event.UpdateGermplasmEvent(germplasm));
+  };
+
+  const removeRecord = (germplasmId) => {
+    addEvent(new Event.RemoveGermplasmEvent(germplasmId));
+  };
+
+  const LoadingPage = ({ presenter }) => {
+    return <PageContent presenter={presenter} isLoading={true} />;
+  };
+
+  const LoadedPage = ({ presenter }) => {
+    return (
+      <PageContent
+        presenter={presenter}
+        addColumn={addColumn}
+        removeColumn={removeColumn}
+        addRecord={addRecord}
+        updateRecord={updateRecord}
+        removeRecord={removeRecord}
+      />
+    );
+  };
+
+  const LoadFailPage = ({ presenter }) => {
+    return <PageContent presenter={presenter} isError={true} />;
+  };
+
+  const PageContent = ({
+    presenter,
+    isLoading,
+    isError,
+    addColumn,
+    removeColumn,
+    addRecord,
+    updateRecord,
+    removeRecord,
+  }) => {
+    return (
+      <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
+        <Box sx={{ paddingLeft: "16px", marginTop: "17px" }}>
+          <Typography display="block" variant="pageTitle">
+            {presenter.pageTitle}
+          </Typography>
+          <Typography variant="pageSubTitle">
+            {presenter.pageSubTitle}
+          </Typography>
+        </Box>
+        <MoveGermplasmButton />
+        <Datasheet
+          presenter={presenter}
+          isError={isError}
+          isLoading={isLoading}
+          addColumn={addColumn}
+          removeColumn={removeColumn}
+          addRecord={addRecord}
+          updateRecord={updateRecord}
+          removeRecord={removeRecord}
+        />
+      </Box>
+    );
+  };
 
   if (state instanceof State.StartState) {
     return <Box></Box>;
@@ -25,38 +101,6 @@ const GermplasmListPage = ({ state, addEvent }) => {
     return <LoadFailPage presenter={state.presenter} />;
   }
   return <LoadFailPage presenter={state.presenter} />;
-};
-
-const LoadingPage = ({ presenter }) => {
-  return <PageContent presenter={presenter} isLoading={true} />;
-};
-
-const LoadedPage = ({ presenter }) => {
-  return <PageContent presenter={presenter} />;
-};
-
-const LoadFailPage = ({ presenter }) => {
-  return <PageContent presenter={presenter} isError={true} />;
-};
-
-const PageContent = ({ presenter, isLoading, isError, addEvent }) => {
-  return (
-    <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
-      <Box sx={{ paddingLeft: "16px", marginTop: "17px" }}>
-        <Typography display="block" variant="pageTitle">
-          {presenter.pageTitle}
-        </Typography>
-        <Typography variant="pageSubTitle">{presenter.pageSubTitle}</Typography>
-      </Box>
-      <MoveGermplasmButton />
-      <Datasheet
-        presenter={presenter}
-        isError={isError}
-        isLoading={isLoading}
-        addEvent={addEvent}
-      />
-    </Box>
-  );
 };
 
 export { GermplasmListPage };

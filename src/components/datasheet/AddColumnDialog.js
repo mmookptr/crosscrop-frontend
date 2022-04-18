@@ -55,11 +55,7 @@ const AddColumnDialog = ({ open, onClose, addColumn }) => {
     const name = event.form.name;
     const type = event.form.type;
 
-    const onFail = (error) => {
-      addEvent(new Event.LoadFailEvent(error));
-    };
-
-    addColumn(name, type, onFail);
+    addColumn(name, type);
   };
 
   const Content = () => {
@@ -86,15 +82,15 @@ const AddColumnDialog = ({ open, onClose, addColumn }) => {
               const form = event.target.form;
 
               if (form.reportValidity()) {
-                const columnName = form.columnName.value;
-                const columnType = form.columnType.value;
+                const name = form.columnName.value;
+                const type = form.columnType.value;
 
-                addEvent(
-                  new Event.FormSubmitEvent({
-                    columnName: columnName,
-                    columnType: columnType,
-                  })
-                );
+                const addColumnForm = {
+                  name: name,
+                  type: type,
+                };
+
+                addEvent(new Event.FormSubmitEvent(addColumnForm));
               }
             }}
           >

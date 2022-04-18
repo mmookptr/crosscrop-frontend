@@ -19,8 +19,30 @@ class ColdroomRepository {
     };
 
     const response = await axios.post(
-      `${this.baseURL}/coldroom/add-germplasm`,
+      `${this.baseURL}/coldroom/germplasm`,
       payload
+    );
+
+    return Coldroom.fromJSON(response.data["coldroom"]);
+  }
+
+  async addGermplasmAttribute(name, type) {
+    const payload = {
+      name: name,
+      type: type,
+    };
+
+    const response = await axios.post(
+      `${this.baseURL}/coldroom/germplasm/attribute`,
+      payload
+    );
+
+    return Coldroom.fromJSON(response.data["coldroom"]);
+  }
+
+  async removeGermplasmAttribute(name) {
+    const response = await axios.delete(
+      `${this.baseURL}/coldroom/germplasm/attribute/${name}`
     );
 
     return Coldroom.fromJSON(response.data["coldroom"]);

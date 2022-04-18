@@ -42,9 +42,7 @@ const BreedingNurseryPage = () => {
         coldroom.germplasms
       );
 
-      setTimeout(() => {
-        addEvent(new Event.LoadSuccessEvent(presenter));
-      }, 1500);
+      addEvent(new Event.LoadSuccessEvent(presenter));
     } catch (error) {
       addEvent(new Event.LoadFailEvent(error.message));
     }

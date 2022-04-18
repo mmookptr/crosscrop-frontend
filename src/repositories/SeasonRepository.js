@@ -7,7 +7,7 @@ class SeasonRepository {
     this.baseURL = baseURL;
   }
 
-  async getSeason() {
+  async getSeasons() {
     const response = await axios.get(`${this.baseURL}/season`);
 
     return response.data["seasons"].map(Season.fromJSON);

@@ -2,10 +2,9 @@ import { Row } from "./Row";
 import { Column } from "./Column";
 import { RowState } from "./RowState";
 
-function getRow(id, apiRef) {
+function getRow(id, values, apiRef) {
   const columns = __getColumns(apiRef);
   const columnNames = columns.map((x) => x.name);
-  const values = { ...apiRef.current.getRow(id) };
   const isNew = Boolean(values.isNew);
   const state = values.__state;
   columnNames.forEach((key) => {
@@ -34,16 +33,16 @@ function startRowEditing(id, apiRef) {
 }
 
 function stopRowEditing(id, apiRef, ignoreModifications = false) {
+  apiRef.current.stopRowEditMode({
+    id,
+    ignoreModifications: ignoreModifications,
+  });
+
   if (ignoreModifications) {
     updateRowState(id, RowState.Loaded, apiRef);
   } else {
     updateRowState(id, RowState.Loading, apiRef);
   }
-
-  apiRef.current.stopRowEditMode({
-    id,
-    ignoreModifications: ignoreModifications,
-  });
 }
 
 const createNewRow = (apiRef) => () => {

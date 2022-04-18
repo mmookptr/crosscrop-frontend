@@ -4,7 +4,11 @@ class GermplasmListPageEvent {
     this.LoadDataEvent = LoadDataEvent;
     this.LoadSuccessEvent = LoadSuccessEvent;
     this.LoadFailEvent = LoadFailEvent;
-    this.CreateNewColumnEvent = CreateNewColumnEvent;
+    this.AddGermplasmEvent = AddGermplasmEvent;
+    this.UpdateGermplasmEvent = UpdateGermplasmEvent;
+    this.RemoveGermplasmEvent = RemoveGermplasmEvent;
+    this.AddGermplasmAttributeEvent = AddGermplasmAttributeEvent;
+    this.RemoveGermplasmAttributeEvent = RemoveGermplasmAttributeEvent;
     this.MoveGermplasmEvent = MoveGermplasmEvent;
   }
 }
@@ -21,13 +25,57 @@ class LoadFailEvent {
     this.error = error;
   }
 }
-class CreateNewColumnEvent {
+class AddGermplasmAttributeEvent {
   constructor(name, type) {
+    if (name === undefined)
+      throw new Error("addGermplasmAttributeEvent name: undefined");
+    if (type === undefined)
+      throw new Error("addGermplasmAttributeEvent type: undefined");
+
     this.name = name;
     this.type = type;
   }
 }
-class MoveGermplasmEvent {}
+class RemoveGermplasmAttributeEvent {
+  constructor(name) {
+    if (name === undefined)
+      throw new Error("RemoveGermplasmAttributeEvent name: undefined");
+
+    this.name = name;
+  }
+}
+class AddGermplasmEvent {
+  constructor(germplasm) {
+    if (germplasm === undefined)
+      throw new Error("AddGermplasmEvent germplasm: undefined");
+
+    this.germplasm = germplasm;
+  }
+}
+class RemoveGermplasmEvent {
+  constructor(id) {
+    if (id === undefined) throw new Error("RemoveGermplasmEvent id: undefined");
+
+    this.id = id;
+  }
+}
+class UpdateGermplasmEvent {
+  constructor(germplasm) {
+    if (germplasm === undefined)
+      throw new Error("UpdateGermplasmEvent germplasm: undefined");
+
+    this.germplasm = germplasm;
+  }
+}
+class MoveGermplasmEvent {
+  constructor(germplasmIds, workflowId) {
+    if (germplasmIds === undefined)
+      throw new Error("MoveGermplasmEvent germplasmIds: undefined");
+
+    this.germplasmIds = germplasmIds;
+    this.workflowId = workflowId;
+  }
+}
 
 const pageEvent = new GermplasmListPageEvent();
 

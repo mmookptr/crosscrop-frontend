@@ -38,18 +38,13 @@ class GermplasmListPagePresenter {
 
         const newRows = [...prev.rows, row];
 
-        const columns = [
-          { field: "id", headerName: "ID", editable: false },
-          { field: "name", headerName: "Name", editable: true },
-        ].concat(
-          germplasm.attributes.map((attribute) => {
-            return {
-              field: attribute.name,
-              type: attribute.type,
-              editable: true,
-            };
-          })
-        );
+        const columns = germplasm.attributes.map((attribute) => {
+          return {
+            field: attribute.name,
+            type: attribute.type,
+            editable: true,
+          };
+        });
         const newColumns = _.uniqWith([...prev.columns, ...columns], _.isEqual);
 
         return { rows: newRows, columns: newColumns };

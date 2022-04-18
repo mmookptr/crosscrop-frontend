@@ -10,6 +10,9 @@ import { Toolbar } from "./Toolbar";
 import { ColumnOption } from "./ColumnOption";
 
 import { getSelectedGermplasm } from "../../slices/germplasmSlice.js";
+import { Germplasm } from "../../models/Germplasm";
+
+import { getRow } from "./Usecase";
 
 const Datasheet = ({
   presenter,
@@ -24,15 +27,32 @@ const Datasheet = ({
   const apiRef = useGridApiRef();
   const dispatch = useDispatch();
 
+  const baseColumn = [
+    { field: "id", headerName: "ID", editable: false },
+    { field: "name", headerName: "Name", editable: true },
+  ];
+  const columns = [...baseColumn, ...presenter.columns];
+
   const handleRowEditStart = (params, event) => {
     event.defaultMuiPrevented = true;
   };
 
   const handleRowEditStop = (params, event) => {
     event.defaultMuiPrevented = true;
+    console.log(params);
   };
 
   const processRowUpdate = (newRow) => {
+    const row = getRow(newRow.id, newRow, apiRef);
+    const germplasm = Germplasm.fromDatasheetRow(row);
+    const isNew = germplasm.id === "-";
+    console.log(germplasm);
+    if (isNew) {
+      addRecord(germplasm);
+    } else {
+      updateRecord(germplasm);
+    }
+
     return newRow;
   };
 
@@ -41,7 +61,7 @@ const Datasheet = ({
       <DataGridPro
         rows={presenter.rows}
         columns={[
-          ...presenter.columns,
+          ...columns,
           actionColumn(apiRef, addRecord, updateRecord, removeRecord),
         ]}
         initialState={{
