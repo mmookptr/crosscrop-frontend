@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { useSelector } from "react-redux";
 
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
@@ -11,6 +12,11 @@ import { FormDialogState as State } from "./FormDialog/FormDialogState";
 import { FormDialogEvent as Event } from "./FormDialog/FormDialogEvent";
 import { FormDialog } from "./FormDialog/FormDialog";
 
+import { ColdroomRepository } from "../Repository/ColdroomRepository";
+import { BreedingNurseryRepository } from "../Repository/BreedingNurseryRepository";
+import { CrossingBlockRepository } from "../Repository/CrossingBlockRepository";
+import { YieldTrialRepository } from "../Repository/YieldTrialRepository";
+import { AppConfig } from "../App/AppConfig";
 import { MoveGermplasmTargetType } from "./MoveGermplasmTargetType";
 
 const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
@@ -19,6 +25,9 @@ const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
     selectedWorkflowType: MoveGermplasmTargetType.Coldroom,
     workflows: [],
   });
+
+  const season = useSelector((state) => state.season.currentSeason);
+  const germplasmIds = useSelector((state) => state.germplasm.ids);
 
   const addEvent = async (event) => {
     handleEvent(event);
@@ -64,19 +73,102 @@ const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
       dialogState: new State.LoadingState(),
     });
 
-    const name = event.form.name;
-    const type = event.form.type;
+    const workflowId = event.form.workflowId;
+    const workflowType = event.form.workflowType;
+    const germplasmIds = event.form.germplasmIds;
 
-    addColumn(name, type);
+    console.log(`id ${workflowId} type ${workflowType} ${germplasmIds}`);
+
+    moveGermplasm(germplasmIds, workflowId, workflowType);
   };
 
-  const loadWorkflows = async (workflowType) => {
-    // switch (workflowType) {
-    //   case MoveGermplasmTargetType.Coldroom:
-    //     break;
-    //   case MoveGermplasmTargetType.BreedingNursery:
-    // }
-    // TODO: Implement this after season selection is implemented
+  const loadWorkflows = async (type) => {
+    try {
+      if (season === null) {
+        throw new Error("Season not selected");
+      }
+
+      if (type === MoveGermplasmTargetType.BreedingNursery) {
+        const repository = new BreedingNurseryRepository(AppConfig.BaseURL);
+
+        const breedingNurseries =
+          await repository.getBreedingNurseriesBySeasonId(season.id);
+
+        setState({
+          ...state,
+          selectedWorkflowType: type,
+          workflows: breedingNurseries,
+        });
+      } else if (type === MoveGermplasmTargetType.CrossingBlock) {
+        const repository = new CrossingBlockRepository(AppConfig.BaseURL);
+
+        const crossingBlocks = await repository.getCrossingBlocksBySeasonId(
+          season.id
+        );
+
+        setState({
+          ...state,
+          selectedWorkflowType: type,
+          workflows: crossingBlocks,
+        });
+      } else if (type === MoveGermplasmTargetType.YieldTrial) {
+        const repository = new YieldTrialRepository(AppConfig.BaseURL);
+
+        const yieldTrials = await repository.getYieldTrialsBySeasonId(
+          season.id
+        );
+
+        setState({
+          ...state,
+          selectedWorkflowType: type,
+          workflows: yieldTrials,
+        });
+      } else {
+        throw new Error("loadworkflow workflow invalid workflowType");
+      }
+    } catch (error) {
+      addEvent(new Event.LoadFailEvent(error.message));
+    }
+  };
+
+  const moveGermplasm = async (germplasmIds, workflowId, type) => {
+    try {
+      setState({
+        ...state,
+        selectedWorkflowType: type,
+        dialogState: new State.LoadingState(),
+      });
+
+      if (season === null) {
+        throw new Error("Season not selected");
+      }
+
+      if (type === MoveGermplasmTargetType.Coldroom) {
+        const repository = new ColdroomRepository(AppConfig.BaseURL);
+
+        await repository.addGermplasm(germplasmIds);
+      } else if (type === MoveGermplasmTargetType.BreedingNursery) {
+        const repository = new BreedingNurseryRepository(AppConfig.BaseURL);
+
+        await repository.addGermplasm(workflowId, germplasmIds);
+      } else if (type === MoveGermplasmTargetType.CrossingBlock) {
+        const repository = new CrossingBlockRepository(AppConfig.BaseURL);
+
+        await repository.addGermplasm(workflowId, germplasmIds);
+      } else if (type === MoveGermplasmTargetType.YieldTrial) {
+        const repository = new YieldTrialRepository(AppConfig.BaseURL);
+
+        await repository.addGermplasm(workflowId, germplasmIds);
+      } else {
+        throw new Error("loadworkflow workflow invalid workflowType");
+      }
+
+      addEvent(new Event.StartEvent());
+
+      onClose();
+    } catch (error) {
+      addEvent(new Event.LoadFailEvent(error.message));
+    }
   };
 
   const Content = () => {
@@ -102,19 +194,20 @@ const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
               const form = event.target.form;
 
               if (form.reportValidity()) {
-                const type = form.workflowType.value;
-                const germplasmIds = [];
+                const workflowType = form.workflowType.value;
+                const workflowId = form.workflowId.value;
 
                 const moveGermplasmForm = {
                   germplasmIds: germplasmIds,
-                  workflowId: type,
+                  workflowType: workflowType,
+                  workflowId: workflowId,
                 };
 
                 addEvent(new Event.FormSubmitEvent(moveGermplasmForm));
               }
             }}
           >
-            Add
+            Move
           </Button>
         </Box>
       </form>
@@ -142,7 +235,10 @@ const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
     ];
 
     const handleChange = (event) => {
-      setState({ ...state, selectedWorkflowType: event.target.value });
+      const workflowType = event.target.value;
+
+      setState({ ...state, selectedWorkflowType: workflowType });
+      loadWorkflows(workflowType);
     };
 
     return (
@@ -170,7 +266,7 @@ const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
 
     const workflowChoices = workflows.map((workflow) => {
       return {
-        value: workflow,
+        value: workflow.id,
         label: workflow.name,
       };
     });
@@ -181,16 +277,16 @@ const MoveGermplasmDialog = ({ open, onClose, addColumn }) => {
 
     return (
       <FormControl sx={{ m: 1, minWidth: 160 }}>
-        <InputLabel id="workflow-type">Workflow</InputLabel>
+        <InputLabel id="workflow-id">Workflow</InputLabel>
         <Select
           disabled={workflows.length === 0}
-          labelId="workflow-type"
-          id="workflow-type"
+          labelId="workflow-id"
+          id="workflow-id"
           value={workflow}
           onChange={handleChange}
           autoWidth
-          label="Workflow Type"
-          name="workflowType"
+          label="Workflow Id"
+          name="workflowId"
         >
           {workflowChoices.map((target) => {
             return <MenuItem value={target.value}>{target.label}</MenuItem>;

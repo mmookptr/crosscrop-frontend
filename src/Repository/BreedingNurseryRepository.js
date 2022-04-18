@@ -51,6 +51,41 @@ class BreedingNurseryRepository {
 
     return response.data;
   }
+
+  async addGermplasm(id, germplasmIds) {
+    const payload = {
+      germplasm_ids: germplasmIds,
+    };
+
+    const response = await axios.post(
+      `${this.baseURL}/workflow/${id}/germplasm`,
+      payload
+    );
+
+    return BreedingNursery.fromJSON(response.data["workflow"]);
+  }
+
+  async addGermplasmAttribute(id, name, type) {
+    const payload = {
+      name: name,
+      type: type,
+    };
+
+    const response = await axios.post(
+      `${this.baseURL}/workflow/${id}/germplasm/attribute`,
+      payload
+    );
+
+    return BreedingNursery.fromJSON(response.data["workflow"]);
+  }
+
+  async removeGermplasmAttribute(id, name) {
+    const response = await axios.delete(
+      `${this.baseURL}/workflow/${id}/germplasm/attribute/${name}`
+    );
+
+    return BreedingNursery.fromJSON(response.data["workflow"]);
+  }
 }
 
 export { BreedingNurseryRepository };

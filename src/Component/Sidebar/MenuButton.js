@@ -14,7 +14,8 @@ const MenuButton = ({ presenter, sx }) => {
 
   const location = useLocation().pathname;
 
-  const hasSubMenu = presenter.subMenuButtonPresenters.length !== 0;
+  const canAdd = presenter.canAdd;
+  const hasSubMenu = presenter.subMenuButtonPresenters.length !== 0 || canAdd;
 
   const isCurrentLocation = location === presenter.toPath;
 

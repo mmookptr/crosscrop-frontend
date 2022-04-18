@@ -27,8 +27,8 @@ class Workflow {
       json["name"],
       germplasms,
       season,
-      json["updated_on"],
-      json["created_on"]
+      json["created_on"],
+      json["updated_on"]
     );
 
     return workflow;

@@ -7,12 +7,16 @@ import { Button } from "@mui/material";
 import { MoveGermplasmDialog } from "./MoveGermplasmDialog";
 
 const MoveGermplasmButton = () => {
-  const selectedGermplasm = useSelector((state) => state.germplasm.ids);
+  const season = useSelector((state) => state.season.currentSeason);
 
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
-    setOpen(true);
+    if (season === null) {
+      alert("Please select season.");
+    } else {
+      setOpen(true);
+    }
   };
 
   const handleClose = () => {
@@ -34,7 +38,9 @@ const MoveGermplasmButton = () => {
       >
         Move Germplasm
       </Button>
-      <MoveGermplasmDialog open={open} onClose={handleClose} />
+      {season !== null && (
+        <MoveGermplasmDialog open={open} onClose={handleClose} />
+      )}
     </Box>
   );
 };

@@ -38,7 +38,7 @@ const render = (state) => {
   } else if (state instanceof State.LoadSuccessState) {
     return <LoadedDialog Content={state.content} />;
   } else if (state instanceof State.LoadFailState) {
-    return <LoadFailDialog error={"fail"} />;
+    return <LoadFailDialog error={state.error} />;
   }
 
   return <LoadFailDialog error={state.error} />;

@@ -82,38 +82,44 @@ const SelectSeasonDialog = ({ open, onClose }) => {
             display: "flex",
             flexDirection: "column",
             alignContent: "center",
+            justifyContent: "center",
           }}
         >
           <SelectSeason seasons={seasons} />
           <Box
             sx={{
               display: "flex",
-              width: "320px",
+              width: "400px",
               flexDirection: "row",
               marginTop: "16px",
-              justifyContent: "flex-end",
+              justifyContent: "space-between",
             }}
           >
             <Button color="inherit" onClick={onClose}>
-              Cancel
+              Add Season
             </Button>
-            <Button
-              color="primary"
-              type="button"
-              onClick={(event) => {
-                const form = event.target.form;
+            <Box>
+              <Button color="inherit" onClick={onClose}>
+                Cancel
+              </Button>
+              <Button
+                color="primary"
+                type="button"
+                onClick={(event) => {
+                  const form = event.target.form;
 
-                if (form.reportValidity()) {
-                  const selectedSeason = seasons[form.season.value];
+                  if (form.reportValidity()) {
+                    const selectedSeason = seasons[form.season.value];
 
-                  const selectSeasonForm = { season: selectedSeason };
+                    const selectSeasonForm = { season: selectedSeason };
 
-                  addEvent(new Event.FormSubmitEvent(selectSeasonForm));
-                }
-              }}
-            >
-              Add
-            </Button>
+                    addEvent(new Event.FormSubmitEvent(selectSeasonForm));
+                  }
+                }}
+              >
+                Select
+              </Button>
+            </Box>
           </Box>
         </Box>
       </form>
@@ -135,7 +141,7 @@ const SelectSeasonDialog = ({ open, onClose }) => {
     };
 
     return (
-      <FormControl sx={{ m: 1, minWidth: "180px" }}>
+      <FormControl sx={{ m: 1, width: "320px", alignSelf: "center" }}>
         <InputLabel id="season">Season</InputLabel>
         <Select
           disabled={seasons.length === 0}
@@ -162,7 +168,7 @@ const SelectSeasonDialog = ({ open, onClose }) => {
       state={state}
       sx={{
         display: "flex",
-        width: "320px",
+        width: "400px",
         height: "144px",
         padding: "16px",
         justifyContent: "center",
