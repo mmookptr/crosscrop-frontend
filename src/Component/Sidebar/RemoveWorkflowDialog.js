@@ -197,7 +197,7 @@ const RemoveWorkflowDialog = ({ open, onClose }) => {
               }
             }}
           >
-            Move
+            Remove
           </Button>
         </Box>
       </form>
@@ -262,7 +262,7 @@ const RemoveWorkflowDialog = ({ open, onClose }) => {
     };
 
     return (
-      <FormControl sx={{ m: 1, minWidth: 160 }}>
+      <FormControl sx={{ m: 1, minWidth: 240 }}>
         <InputLabel id="workflow-id">Workflow</InputLabel>
         <Select
           disabled={workflows.length === 0}
@@ -288,7 +288,7 @@ const RemoveWorkflowDialog = ({ open, onClose }) => {
       state={state.dialogState}
       sx={{
         display: "flex",
-        width: "440px",
+        width: "520px",
         height: "144px",
         padding: "16px",
         justifyContent: "center",

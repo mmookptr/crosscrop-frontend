@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import { Button } from "@mui/material";
 import { Box } from "@mui/system";
+import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
@@ -12,19 +13,28 @@ import { FormDialogState as State } from "./FormDialog/FormDialogState";
 import { FormDialogEvent as Event } from "./FormDialog/FormDialogEvent";
 import { FormDialog } from "./FormDialog/FormDialog";
 
+import { AppConfig } from "../App/AppConfig";
 import { ColdroomRepository } from "../Repository/ColdroomRepository";
+import { GermplasmRepository } from "../Repository/GermplasmRepository";
 import { BreedingNurseryRepository } from "../Repository/BreedingNurseryRepository";
 import { CrossingBlockRepository } from "../Repository/CrossingBlockRepository";
 import { YieldTrialRepository } from "../Repository/YieldTrialRepository";
-import { AppConfig } from "../App/AppConfig";
 import { MoveGermplasmTargetType } from "./MoveGermplasmTargetType";
 
+import { GermplasmCrosser } from "../Helper/GermplasmCrosser";
+
 const MoveGermplasmDialog = ({ open, onClose }) => {
-  const [state, setState] = useState({
+  const initialState = {
     dialogState: new State.StartState(),
     selectedWorkflowType: MoveGermplasmTargetType.Coldroom,
     workflows: [],
-  });
+  };
+  const [state, setState] = useState(initialState);
+
+  const closeDialog = () => {
+    setState(initialState);
+    onClose();
+  };
 
   const season = useSelector((state) => state.season.currentSeason);
   const germplasmIds = useSelector((state) => state.germplasm.ids);
@@ -77,9 +87,12 @@ const MoveGermplasmDialog = ({ open, onClose }) => {
     const workflowType = event.form.workflowType;
     const germplasmIds = event.form.germplasmIds;
 
-    console.log(`id ${workflowId} type ${workflowType} ${germplasmIds}`);
-
-    moveGermplasm(germplasmIds, workflowId, workflowType);
+    if (workflowType === MoveGermplasmTargetType.CrossingBlock) {
+      const outputCount = event.form.outputCount;
+      crossGermplasm(germplasmIds, workflowId, outputCount);
+    } else {
+      moveGermplasm(germplasmIds, workflowId, workflowType);
+    }
   };
 
   const loadWorkflows = async (type) => {
@@ -151,21 +164,48 @@ const MoveGermplasmDialog = ({ open, onClose }) => {
         const repository = new BreedingNurseryRepository(AppConfig.BaseURL);
 
         await repository.addGermplasm(workflowId, germplasmIds);
-      } else if (type === MoveGermplasmTargetType.CrossingBlock) {
-        const repository = new CrossingBlockRepository(AppConfig.BaseURL);
-
-        await repository.addGermplasm(workflowId, germplasmIds);
       } else if (type === MoveGermplasmTargetType.YieldTrial) {
         const repository = new YieldTrialRepository(AppConfig.BaseURL);
 
         await repository.addGermplasm(workflowId, germplasmIds);
       } else {
-        throw new Error("loadworkflow workflow invalid workflowType");
+        throw new Error("movegermplasm invalid workflowType");
       }
 
       addEvent(new Event.StartEvent());
 
-      onClose();
+      closeDialog();
+    } catch (error) {
+      addEvent(new Event.LoadFailEvent(error.message));
+    }
+  };
+
+  const crossGermplasm = async (germplasmIds, workflowId, outputCount) => {
+    try {
+      const germplasmRepository = new GermplasmRepository(AppConfig.BaseURL);
+
+      const selectedGermplasms = await germplasmRepository.getGermplasmByIds(
+        germplasmIds
+      );
+
+      const crossedGermplasms = GermplasmCrosser.cross(
+        selectedGermplasms,
+        outputCount
+      );
+
+      await Promise.all(
+        crossedGermplasms.map((germplasm) =>
+          germplasmRepository.createGermplasm(
+            germplasm.name,
+            parseInt(workflowId),
+            germplasm.attributes
+          )
+        )
+      );
+
+      addEvent(new Event.StartEvent());
+
+      closeDialog();
     } catch (error) {
       addEvent(new Event.LoadFailEvent(error.message));
     }
@@ -174,41 +214,70 @@ const MoveGermplasmDialog = ({ open, onClose }) => {
   const Content = () => {
     return (
       <form>
-        <SelectWorkflowType />
-        <SelectWorkflow workflows={state.workflows} />
         <Box
           sx={{
             display: "flex",
-            flexDirection: "row",
-            marginTop: "16px",
-            justifyContent: "flex-end",
+            flexDirection: "column",
+            alignContent: "start",
           }}
         >
-          <Button color="inherit" onClick={onClose}>
-            Cancel
-          </Button>
-          <Button
-            color="primary"
-            type="button"
-            onClick={(event) => {
-              const form = event.target.form;
-
-              if (form.reportValidity()) {
-                const workflowType = form.workflowType.value;
-                const workflowId = form.workflowId.value;
-
-                const moveGermplasmForm = {
-                  germplasmIds: germplasmIds,
-                  workflowType: workflowType,
-                  workflowId: workflowId,
-                };
-
-                addEvent(new Event.FormSubmitEvent(moveGermplasmForm));
-              }
+          <Box sx={{ display: "flex", justifyContent: "center" }}>
+            <SelectWorkflowType />
+            <SelectWorkflow workflows={state.workflows} />
+            {state.selectedWorkflowType ===
+              MoveGermplasmTargetType.CrossingBlock && (
+              <CrossingOutputNumberField
+                defaultValue={germplasmIds.length}
+                min={1}
+                max={germplasmIds.length ** 2}
+              />
+            )}
+          </Box>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              marginTop: "16px",
+              justifyContent: "flex-end",
+              width: "560px",
             }}
           >
-            Move
-          </Button>
+            <Button color="inherit" onClick={closeDialog}>
+              Cancel
+            </Button>
+            <Button
+              color="primary"
+              type="button"
+              onClick={(event) => {
+                const form = event.target.form;
+
+                if (form.reportValidity()) {
+                  const workflowType = form.workflowType.value;
+                  const workflowId = form.workflowId.value;
+                  let outputCount = undefined;
+                  if (workflowType === MoveGermplasmTargetType.CrossingBlock) {
+                    outputCount = parseInt(form.outputs.value);
+                  }
+
+                  const moveGermplasmForm = {
+                    germplasmIds: germplasmIds,
+                    workflowType: workflowType,
+                    workflowId: workflowId,
+                    outputCount: outputCount,
+                  };
+
+                  addEvent(new Event.FormSubmitEvent(moveGermplasmForm));
+                }
+              }}
+            >
+              {state.selectedWorkflowType ===
+              MoveGermplasmTargetType.CrossingBlock ? (
+                <>Cross</>
+              ) : (
+                <>Move</>
+              )}
+            </Button>
+          </Box>
         </Box>
       </form>
     );
@@ -238,11 +307,13 @@ const MoveGermplasmDialog = ({ open, onClose }) => {
       const workflowType = event.target.value;
 
       setState({ ...state, selectedWorkflowType: workflowType });
-      loadWorkflows(workflowType);
+      if (workflowType !== MoveGermplasmTargetType.Coldroom) {
+        loadWorkflows(workflowType);
+      }
     };
 
     return (
-      <FormControl sx={{ m: 1, minWidth: 160 }}>
+      <FormControl sx={{ m: 1, minWidth: 180 }}>
         <InputLabel id="workflow-type">Workflow Type</InputLabel>
         <Select
           labelId="workflow-type"
@@ -276,7 +347,7 @@ const MoveGermplasmDialog = ({ open, onClose }) => {
     };
 
     return (
-      <FormControl sx={{ m: 1, minWidth: 160 }}>
+      <FormControl sx={{ m: 1, minWidth: 240 }}>
         <InputLabel id="workflow-id">Workflow</InputLabel>
         <Select
           disabled={workflows.length === 0}
@@ -296,19 +367,37 @@ const MoveGermplasmDialog = ({ open, onClose }) => {
     );
   };
 
+  const CrossingOutputNumberField = ({ defaultValue, min, max }) => {
+    return (
+      <TextField
+        sx={{ width: "80px", m: 1 }}
+        type="number"
+        defaultValue={defaultValue}
+        InputProps={{
+          inputProps: {
+            max: max,
+            min: min,
+          },
+        }}
+        label="outputs"
+        name="outputs"
+      />
+    );
+  };
+
   return (
     <FormDialog
       title="Move Germplasm"
       state={state.dialogState}
       sx={{
         display: "flex",
-        width: "440px",
+        minWidth: "600",
         height: "144px",
         padding: "16px",
         justifyContent: "center",
       }}
       open={open}
-      onClose={onClose}
+      onClose={closeDialog}
       addEvent={addEvent}
     />
   );

@@ -21,14 +21,14 @@ const CrossingBlockPage = () => {
   const germplasmRepository = new GermplasmRepository(AppConfig.BaseURL);
   const loadingPresenter = new GermplasmListPagePresenter(
     pageTitle,
-    parseInt(id),
+    " ",
     [],
     true,
     false
   );
   const loadFailPresenter = new GermplasmListPagePresenter(
     pageTitle,
-    parseInt(id),
+    " ",
     [],
     false,
     true
@@ -58,7 +58,7 @@ const CrossingBlockPage = () => {
     } else if (event instanceof Event.RemoveGermplasmAttributeEvent) {
       removeGermplasmAttributeEventToState(event);
     } else {
-      throw new Error(`InvalparseInt(id) Page Event ${event}`);
+      throw new Error(`Invalid Page Event ${event}`);
     }
   };
 
@@ -88,7 +88,7 @@ const CrossingBlockPage = () => {
 
       const presenter = new GermplasmListPagePresenter(
         "Crossing Block",
-        parseInt(id),
+        crossingBlock.name,
         crossingBlock.germplasms
       );
 
@@ -127,7 +127,7 @@ const CrossingBlockPage = () => {
   const updateGermplasm = async (germplasm) => {
     try {
       await germplasmRepository.updateGermplasm(
-        germplasm.parseInt(id),
+        germplasm.id,
         germplasm.name,
         parseInt(id) || undefined,
         germplasm.attributes
@@ -140,7 +140,7 @@ const CrossingBlockPage = () => {
   };
 
   const removeGermplasmEventToState = (event) => {
-    removeGermplasm(event.parseInt(id));
+    removeGermplasm(event.id);
 
     setPageState(new State.LoadingState(loadingPresenter));
   };
@@ -187,10 +187,7 @@ const CrossingBlockPage = () => {
   const removeGermplasmAttribute = async (name) => {
     console.log(name);
     try {
-      await crossingBlockRepository.removeGermplasmAttribute(
-        parseInt(id),
-        name
-      );
+      await crossingBlockRepository.removeGermplasmAttribute(id, name);
 
       addEvent(new Event.StartEvent());
     } catch (error) {
@@ -200,7 +197,7 @@ const CrossingBlockPage = () => {
 
   useEffect(() => {
     addEvent(new Event.LoadDataEvent());
-  }, [parseInt(id)]);
+  }, [id]);
 
   return <GermplasmListPage state={pageState} addEvent={addEvent} />;
 };

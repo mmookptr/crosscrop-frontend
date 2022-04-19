@@ -8,7 +8,6 @@ import Divider from "@mui/material/Divider";
 import MenuButtonPresenter from "../../Presenter/MenuButtonPresenter";
 
 import { SelectSeasonButton } from "./SelectSeasonButton";
-import { AddWorkflowButton } from "./AddWorkflowButton";
 import { Logo } from "./Logo";
 import { WorkflowList } from "./WorkflowList";
 
@@ -24,7 +23,6 @@ import { WorkflowActionMenu } from "./WorkflowActionMenu";
 const Sidebar = () => {
   const theme = useTheme();
   const basePresenters = [
-    new MenuButtonPresenter("Dashboard", "/dashboard"),
     new MenuButtonPresenter("Cold Room Storage", "/coldroom"),
   ];
   const [state, setState] = useState({

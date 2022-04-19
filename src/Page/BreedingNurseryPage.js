@@ -58,7 +58,7 @@ const BreedingNurseryPage = () => {
     } else if (event instanceof Event.RemoveGermplasmAttributeEvent) {
       removeGermplasmAttributeEventToState(event);
     } else {
-      throw new Error(`InvalparseInt(id) Page Event ${event}`);
+      throw new Error(`Invalid Page Event ${event}`);
     }
   };
 
@@ -139,7 +139,7 @@ const BreedingNurseryPage = () => {
   };
 
   const removeGermplasmEventToState = (event) => {
-    removeGermplasm(event.parseInt(id));
+    removeGermplasm(event.id);
 
     setPageState(new State.LoadingState(loadingPresenter));
   };
@@ -184,7 +184,6 @@ const BreedingNurseryPage = () => {
   };
 
   const removeGermplasmAttribute = async (name) => {
-    console.log(name);
     try {
       await breedingNurseryRepository.removeGermplasmAttribute(
         parseInt(id),
@@ -199,7 +198,7 @@ const BreedingNurseryPage = () => {
 
   useEffect(() => {
     addEvent(new Event.LoadDataEvent());
-  }, [parseInt(id)]);
+  }, [id]);
 
   return <GermplasmListPage state={pageState} addEvent={addEvent} />;
 };

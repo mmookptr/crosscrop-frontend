@@ -13,6 +13,14 @@ class GermplasmRepository {
     return Germplasm.fromJSON(response.data["germplasm"]);
   }
 
+  async getGermplasmByIds(ids) {
+    const response = await axios.get(
+      `${this.baseURL}/germplasm?ids${JSON.stringify(ids)}`
+    );
+
+    return response.data["germplasms"].map(Germplasm.fromJSON);
+  }
+
   async getGermplasmsByWorkflowId(id) {
     const response = await axios.get(
       `${this.baseURL}/germplasm?workflow-id=${id}`
