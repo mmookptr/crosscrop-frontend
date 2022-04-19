@@ -7,6 +7,7 @@ import { ColdroomPage } from "../Page/ColdroomPage";
 import { BreedingNurseryPage } from "../Page/BreedingNurseryPage";
 import { CrossingBlockPage } from "../Page/CrossingBlockPage";
 import { YieldTrialPage } from "../Page/YieldTrialPage";
+import { Logout } from "@mui/icons-material";
 
 const AppRoutes = () => {
   return (
@@ -17,6 +18,7 @@ const AppRoutes = () => {
         <Route path="/breedingnursery/:id" element={<BreedingNurseryPage />} />
         <Route path="/crossingblock/:id" element={<CrossingBlockPage />} />
         <Route path="/yieldtrial/:id" element={<YieldTrialPage />} />
+        <Route path="/logout" element={<Logout />} />
       </Routes>
     </Box>
   );

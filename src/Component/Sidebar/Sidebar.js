@@ -18,6 +18,8 @@ import { BreedingNurseryRepository } from "../../Repository/BreedingNurseryRepos
 import { CrossingBlockRepository } from "../../Repository/CrossingBlockRepository";
 import { YieldTrialRepository } from "../../Repository/YieldTrialRepository";
 import { WorkflowType } from "../../Model/WorkflowType";
+import { RemoveWorkflowButton } from "./RemoveWorkflowButton";
+import { WorkflowActionMenu } from "./WorkflowActionMenu";
 
 const Sidebar = () => {
   const theme = useTheme();
@@ -132,6 +134,24 @@ const Sidebar = () => {
     return presenter;
   }
 
+  const SidebarDivider = ({ sx }) => {
+    return (
+      <Divider
+        sx={
+          sx !== undefined
+            ? sx
+            : {
+                bgcolor: "white",
+                height: "2px",
+                margin: "16px 24px",
+                border: "none",
+                borderRadius: 16,
+              }
+        }
+      />
+    );
+  };
+
   return (
     <Box
       component="nav"
@@ -146,17 +166,25 @@ const Sidebar = () => {
     >
       <Logo />
       <SelectSeasonButton />
-      <Divider
-        sx={{
-          bgcolor: "white",
-          height: "2px",
-          margin: "16px 24px",
-          border: "none",
-          borderRadius: 16,
-        }}
-      />
+      <SidebarDivider />
       <WorkflowList presenters={state.presenters} />
-      {season !== null && <AddWorkflowButton loadWorkflow={loadWorkflow} />}
+      {season !== null && (
+        <>
+          <SidebarDivider
+            sx={{
+              bgcolor: "white",
+              height: "2px",
+              margin: "0 24px 16px 24px",
+              border: "none",
+              borderRadius: 16,
+            }}
+          />
+          <WorkflowActionMenu
+            seasonId={season.id}
+            loadWorkflow={loadWorkflow}
+          />
+        </>
+      )}
     </Box>
   );
 };

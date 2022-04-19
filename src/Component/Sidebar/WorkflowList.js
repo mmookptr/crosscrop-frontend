@@ -7,7 +7,7 @@ const WorkflowList = ({ presenters }) => {
   const location = useLocation().pathname;
 
   return (
-    <List sx={{ flex: 1, overflow: "auto", padding: 0 }}>
+    <List sx={{ overflow: "auto", padding: 0 }}>
       {presenters.map((presenter) => (
         <MenuButton
           presenter={presenter}

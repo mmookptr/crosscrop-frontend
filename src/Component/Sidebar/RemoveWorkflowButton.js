@@ -4,9 +4,9 @@ import { useSelector } from "react-redux";
 import { Box } from "@mui/system";
 import { Button } from "@mui/material";
 
-import { AddWorkflowDialog } from "./AddWorkflowDialog";
+import { RemoveWorkflowDialog } from "./RemoveWorkflowDialog";
 
-const AddWorkflowButton = ({ loadWorkflow }) => {
+const RemoveWorkflowButton = ({ loadWorkflow }) => {
   const [open, setOpen] = useState(false);
 
   const handleClickOpen = () => {
@@ -25,7 +25,7 @@ const AddWorkflowButton = ({ loadWorkflow }) => {
       sx={{
         display: "flex",
         justifyContent: "center",
-        margin: "0 16px 16px 16px",
+        margin: "0 16px 32px 16px",
       }}
     >
       <Button
@@ -37,10 +37,10 @@ const AddWorkflowButton = ({ loadWorkflow }) => {
         }}
         onClick={handleClickOpen}
       >
-        Add Workflow
+        Remove Workflow
       </Button>
       {season !== null && (
-        <AddWorkflowDialog
+        <RemoveWorkflowDialog
           open={open}
           onClose={handleClose}
           seasonId={season.id}
@@ -50,4 +50,4 @@ const AddWorkflowButton = ({ loadWorkflow }) => {
   );
 };
 
-export { AddWorkflowButton };
+export { RemoveWorkflowButton };

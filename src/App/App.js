@@ -83,7 +83,6 @@ const theme = createTheme({
     },
     loginPanelSubheader: {
       fontSize: "36px",
-      // fontWeight: "bold",
     },
   },
 });

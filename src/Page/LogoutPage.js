@@ -1,11 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { useCookies } from "react-cookie";
+
+import { useDispatch } from "react-redux";
+import { userLogin } from "../Slice/AuthenticationSlice";
 
 const LogoutPage = () => {
-  const [cookies, setCookie] = useCookies(["isLogin"]);
+  const dispatch = useDispatch();
 
-  setCookie("isLogin", "false");
-  console.log(cookies.isLogin)
+  dispatch(userLogin(false));
+
   return <Navigate replace to="/"></Navigate>;
 };
 
